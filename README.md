@@ -24,8 +24,8 @@ The Contact Manager is a web application developed using the LAMP stack (Linux, 
 
 - Adam Bawatneh (Project Manager / Full-stack Developer)
 - Christopher Jenkins (API Developer)
-- Dylan Moo-Hernandez (Database Developer)
-- Tyler Torsiello (Front-end Developer)
+- Dylan Moo-Hernandez (Front-end Developer)
+- Tyler Torsiello (Database Developer)
 
 ## Usage
 
