@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .form-container {
+            max-width: 450px; /* Adjusted width */
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #444;
+            border-radius: 10px;
+        }
+        .form-control {
+            background-color: black;
+            color: white;
+            border: 1px solid #444;
+            transition: all 0.3s ease;
+            visibility: hidden; /* Initially hidden for animation */
+        }
+        .form-control:focus {
+            background-color: black;
+            color: white;
+            border: 1px solid #00f;
+            box-shadow: 0 0 5px 2px #00f;
+        }
+        .form-control.visible {
+            animation: waterWave 3s forwards;
+        }
+        .valid-feedback, .invalid-feedback {
+            display: none;
+            font-size: 0.9em;
+        }
+        .is-valid ~ .valid-feedback {
+            display: block;
+            color: green;
+        }
+        .is-invalid ~ .invalid-feedback {
+            display: block;
+            color: red;
+        }
+        .typing-effect {
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3s steps(40, end);
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes waterWave {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <p id="welcomeMessage" class="typing-effect">Welcome to the Contact Manager!</p>
+        <p id="introMessage" class="typing-effect" style="display: none;">Are you ready to manage your contacts?</p>
+        <p id="promptMessage" class="typing-effect" style="display: none;">Please enter your username and password.</p>
+        <form id="registerForm" class="needs-validation" novalidate style="display: none;">
+            <div class="form-group">
+                <label for="username" class="visible">Username:</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+                <div class="invalid-feedback">Username is required.</div>
+                <div class="valid-feedback">Username is valid.</div>
+            </div>
+            <div class="form-group">
+                <label for="password" class="visible">Password:</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                <div class="invalid-feedback">Password is required.</div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block visible">Register</button>
+        </form>
+    </div>
+    <script src="js/register.js"></script>
+</body>
+</html>
