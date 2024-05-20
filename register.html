@@ -4,39 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
+
+    <!-- New font option (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
-            background-color: black;
-            color: white;
+            /* background-color: rgb(24, 24, 24); */
+            background: linear-gradient(to bottom, #000920, #161d29);
+            color: rgb(243, 243, 243);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: 'Courier New', Courier, monospace;
+            /* font-family: 'Courier New', Courier, monospace; */
+            font-family: Inter; 
         }
         .form-container {
             max-width: 450px; /* Adjusted width */
             width: 100%;
-            padding: 20px;
-            border: 1px solid #444;
-            border-radius: 10px;
+            padding: 50px;
+            border: 2px solid rgb(243, 243, 243);
+            border-radius: 40px;
+            background-color: #101010; 
         }
         .form-control {
             background-color: black;
-            color: white;
+            color: rgb(243, 243, 243);
             border: 1px solid #444;
             transition: all 0.3s ease;
             visibility: hidden; /* Initially hidden for animation */
         }
         .form-control:focus {
             background-color: black;
-            color: white;
+            color: rgb(243, 243, 243);
             border: 1px solid #00f;
             box-shadow: 0 0 5px 2px #00f;
         }
         .form-control.visible {
-            animation: waterWave 3s forwards;
+            animation: waterWave 1s forwards;
         }
         .valid-feedback, .invalid-feedback {
             display: none;
@@ -53,7 +62,7 @@
         .typing-effect {
             white-space: nowrap;
             overflow: hidden;
-            animation: typing 3s steps(40, end);
+            animation: typing 1.5s steps(40, end);
         }
 
         @keyframes typing {
@@ -65,26 +74,52 @@
             0% { opacity: 0; }
             100% { opacity: 1; }
         }
+
+        .welcome-message {
+            font-size: 30px;
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .register-button {
+            background-color: #00f;
+            color: rgb(243, 243, 243);
+            border: 1px solid #444;
+            text-align: left;
+            animation: waterWave 1s forwards;
+        }
+
+        .prompt-message {
+            margin-bottom: 30px;
+        }
+
+        .login-prompt {
+            margin-top: 20px;
+            color:rgb(243, 243, 243);
+            /* text-align: center; */
+        }
+
     </style>
 </head>
 <body>
     <div class="form-container">
-        <p id="welcomeMessage" class="typing-effect">Welcome to the Contact Manager!</p>
-        <p id="introMessage" class="typing-effect" style="display: none;">Are you ready to manage your contacts?</p>
-        <p id="promptMessage" class="typing-effect" style="display: none;">Please enter your username and password.</p>
+        <p id="welcomeMessage" class="typing-effect welcome-message">Welcome to the Contact Manager!</p>
+        <!-- <p id="introMessage" class="typing-effect" style="display: none;">Are you ready to manage your contacts?</p> -->
+        <p id="promptMessage" class="typing-effect prompt-message" style="display: none;">Please enter your username and password.</p>
         <form id="registerForm" class="needs-validation" novalidate style="display: none;">
             <div class="form-group">
-                <label for="username" class="visible">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+                <!-- <label for="username" class="visible">Username:</label> -->
+                <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
                 <div class="invalid-feedback">Username is required.</div>
                 <div class="valid-feedback">Username is valid.</div>
             </div>
             <div class="form-group">
-                <label for="password" class="visible">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <!-- <label for="password" class="visible">Password:</label> -->
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
                 <div class="invalid-feedback">Password is required.</div>
             </div>
-            <button type="submit" class="btn btn-primary btn-block visible">Register</button>
+            <button type="submit" class="btn btn-primary btn-block visible register-button">Register</button>
+            <p class="login-prompt">Already have an account? <strong>Log in here.</strong></p>
         </form>
     </div>
     <script src="js/register.js"></script>
