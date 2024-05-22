@@ -7,22 +7,25 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/login.css">
+        <link rel="stylesheet" href="css/user-access.css">
     </head>
     <body>
         <div class="form-container">
             <p id="welcomeMessage" class="typing-effect">Welcome to the Contact Manager!</p>
-            <p id="introMessage" class="typing-effect" style="display: none;">Log in to manage your contacts.</p>
+            <p id="introMessage" class="typing-effect login-message" style="display: none;">Log in to manage your contacts.</p>
             <form id="loginForm" class="needs-validation" novalidate style="display: none;">
                 <div class="form-group">
-                    <input type="text" class="form-control" id="loginUsername" name="username" placeholder="Username" required>
+                    <div class="username-header">Username:</div>
+                    <input type="text" class="form-control" id="loginUsername" name="username" required>
                     <div class="invalid-feedback" id="usernameFeedback">Username is required.</div>
                 </div>
                 <div class="form-group password-wrapper">
-                    <input type="password" class="form-control" id="loginPassword" name="password" placeholder="Password" required>
+                    <div class="password-header">Password:</div>
+                    <input type="password" class="form-control" id="loginPassword" name="password" required>
                     <i class="toggle-password" id="toggleLoginPassword">👁️</i>
                     <div class="invalid-feedback" id="passwordFeedback">Password is required.</div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                <button type="submit" class="btn btn-primary btn-block login-button">Log in</button>
                 <div class="register-link visible">Don't have an account? <a id="registerLink">Register</a></div>
             </form>
         </div>
