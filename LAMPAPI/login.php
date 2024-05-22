@@ -1,52 +1,37 @@
 <?php
+require 'config.php';
+
 header("Content-Type: application/json; charset=UTF-8");
 
-// Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "contact_manager";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die(json_encode(["error" => "Connection failed: " . $conn->connect_error]));
-}
-
-// Get the input data
+// Decode the JSON input
 $data = json_decode(file_get_contents("php://input"));
 
-if (isset($data->username) && isset($data->password)) {
-    $username = $data->username;
-    $password = $data->password;
-
-    // Check if username exists
-    $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $stmt->store_result();
-    
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $stored_password);
-        $stmt->fetch();
-
-        // Verify password
-        if ($password === $stored_password) {
-            // Start session or generate token
-            session_start();
-            $_SESSION['user_id'] = $id;
-            echo json_encode(["success" => true, "user_id" => $id]);
-        } else {
-            echo json_encode(["error" => "Incorrect password"]);
-        }
-    } else {
-        echo json_encode(["error" => "Username does not exist"]);
-    }
-
-    $stmt->close();
-} else {
-    echo json_encode(["error" => "Invalid input"]);
+// Connect to the database
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(array("error" => "Connection failed: " . $e->getMessage()));
+    exit();
 }
 
-$conn->close();
+// Check if the username exists
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->bindParam(':username', $data->username);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$result) {
+    echo json_encode(array("error" => "Username does not exist"));
+    exit();
+}
+
+// Verify the password
+if ($result['password'] !== $data->password) { // Assuming password is stored in plaintext
+    echo json_encode(array("error" => "Incorrect password"));
+    exit();
+}
+
+// Return the user ID if login is successful
+echo json_encode(array("error" => "", "user_id" => $result['id']));
 ?>

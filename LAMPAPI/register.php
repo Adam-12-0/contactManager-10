@@ -1,52 +1,39 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+require 'config.php';
 
 header("Content-Type: application/json; charset=UTF-8");
 
 // Decode the JSON input
 $data = json_decode(file_get_contents("php://input"));
 
-// Debugging: Print the received JSON data
-file_put_contents("php://stderr", print_r($data, true));
+// Connect to the database
+try {
+    $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo json_encode(array("error" => "Connection failed: " . $e->getMessage()));
+    exit();
+}
 
-if (isset($data->username) && isset($data->password)) {
-    $username = $data->username;
-    $password = $data->password;
+// Check if the username already exists
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->bindParam(':username', $data->username);
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    $conn = new mysqli("localhost", "root", "", "contact_manager");
+if ($result) {
+    echo json_encode(array("error" => "Username already exists"));
+    exit();
+}
 
-    if ($conn->connect_error) {
-        echo json_encode(array("error" => "Connection failed: " . $conn->connect_error));
-        exit();
-    }
-
-    $stmt = $conn->prepare("SELECT id FROM users WHERE username = ?");
-    $stmt->bind_param("s", $username);
+// Insert the new user
+try {
+    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+    $stmt->bindParam(':username', $data->username);
+    $stmt->bindParam(':password', $data->password); // Don't hash the password
     $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        echo json_encode(array("error" => "Username already taken"));
-        $stmt->close();
-        $conn->close();
-        exit();
-    }
-
-    $stmt->close();
-
-    $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-    $stmt->bind_param("ss", $username, $password);
-
-    if ($stmt->execute()) {
-        echo json_encode(array("error" => ""));
-    } else {
-        echo json_encode(array("error" => "Failed to register user"));
-    }
-
-    $stmt->close();
-    $conn->close();
-} else {
-    echo json_encode(array("error" => "Invalid input"));
+    echo json_encode(array("error" => ""));
+} catch (PDOException $e) {
+    echo json_encode(array("error" => "Registration failed: " . $e->getMessage()));
 }
 ?>
