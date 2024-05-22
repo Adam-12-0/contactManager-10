@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             loginUsername.classList.add("visible");
             loginPassword.classList.add("visible");
+            registerLink.classList.add("visible");
             loginForm.style.display = "block";
         }, 500);
     });
