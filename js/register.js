@@ -59,24 +59,43 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         try {
-            const response = await fetch("LAMPAPI/register.php", {
+            const registerResponse = await fetch("LAMPAPI/register.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
+            const registerData = await registerResponse.json();
 
-            if (data.error) {
-                if (data.error === "Username already taken") {
+            if (registerData.error) {
+                if (registerData.error === "Username already exists") {
                     usernameInput.classList.add("is-invalid");
                     document.getElementById("usernameFeedback").textContent = "Username is already taken";
                 } else {
-                    console.log("API returned error: ", data.error);
+                    console.log("API returned error: ", registerData.error);
                 }
             } else {
                 usernameInput.classList.remove("is-invalid");
-                console.log("No error, user registered");
+                // Attempt to log the user in immediately after registration
+                try {
+                    const loginResponse = await fetch("LAMPAPI/login.php", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ username, password }),
+                    });
+
+                    const loginData = await loginResponse.json();
+
+                    if (loginData.error) {
+                        console.log("API returned error: ", loginData.error);
+                    } else {
+                        // Store the user ID in local storage
+                        localStorage.setItem("user_id", loginData.user_id);
+                        window.location.href = "contacts.html";
+                    }
+                } catch (loginError) {
+                    console.error("Error logging in after registration:", loginError);
+                }
             }
         } catch (error) {
             console.error("Error:", error);

@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => {
             loginUsername.classList.add("visible");
             loginPassword.classList.add("visible");
+            registerLink.classList.add("visible");
             loginForm.style.display = "block";
         }, 500);
     });
@@ -71,6 +72,8 @@ document.addEventListener("DOMContentLoaded", () => {
             } else {
                 loginUsername.classList.remove("is-invalid");
                 loginPassword.classList.remove("is-invalid");
+                localStorage.setItem("user_id", data.user_id);
+                window.location.href = "contacts.html";
             }
         } catch (error) {
             console.error("Error:", error);

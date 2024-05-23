@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="css/contacts.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Vertical Menu -->
+        <div class="vertical-menu">
+            <div class="logo-placeholder"></div>
+            <ul>
+                <li><a href="#">Theme</a></li>
+                <li><a href="#">Documentation</a></li>
+                <li><a href="#">Log Out</a></li>
+            </ul>
+        </div>
+        <!-- RHS: Search for a Contact -->
+        <div class="div-2">
+            <div id="contact-page">
+                <div class="search-header">
+                    <p class="search-contacts-title">Search for Contacts</p>
+                    <input type="text" id="search-bar" placeholder="Search...">
+                    <button id="add-contact-button">+</button>
+                </div>
+                <div id="contact-list"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Contact Form Popup -->
+    <div id="add-contact-popup" class="hidden">
+        <form id="add-contact-form">
+            <h2>Add Contact</h2>
+            <label for="organization">Organization:</label>
+            <input type="text" id="organization" name="organization">
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number">
+            <label for="email_address">Email:</label>
+            <input type="email" id="email_address" name="email_address">
+            <button type="submit">Add</button>
+            <button type="button" id="close-popup-button">Close</button>
+        </form>
+    </div>
+    <script src="js/contacts.js"></script>
+</body>
+</html>
