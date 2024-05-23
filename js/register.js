@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (registerData.error) {
                 if (registerData.error === "Username already exists") {
                     usernameInput.classList.add("is-invalid");
-                    document.getElementById("usernameFeedback").textContent = "Username is already taken";
+                    document.getElementById("usernameFeedback").textContent = "Username already exists";
                 } else {
                     console.log("API returned error: ", registerData.error);
                 }
