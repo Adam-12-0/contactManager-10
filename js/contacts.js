@@ -1,5 +1,3 @@
-// contacts.js
-
 document.addEventListener("DOMContentLoaded", function() {
     const contactList = document.getElementById("contact-list");
     const searchBar = document.getElementById("search-bar");
@@ -8,10 +6,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const closePopupButton = document.getElementById("close-popup-button");
     const addContactForm = document.getElementById("add-contact-form");
     const contactPage = document.getElementById("contact-page");
+    const wrapper = document.querySelector('.wrapper');
 
     // Load contacts from the API
     function loadContacts() {
-        fetch('http://localhost/contactManager-10/LAMPAPI/load.php', {
+        fetch('http://cop4331-summer.com/LAMPAPI/load.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -38,15 +37,6 @@ document.addEventListener("DOMContentLoaded", function() {
             let displayName = contact.organization || contact.last_name || contact.first_name || contact.email_address || contact.phone_number;
             if (contact.organization && contact.last_name && contact.first_name) {
                 displayName = `${contact.first_name} ${contact.last_name} ${contact.organization}`;
-            }
-
-            const firstLetter = displayName.charAt(0).toUpperCase();
-            if (firstLetter !== currentLetter) {
-                currentLetter = firstLetter;
-                const letterHeader = document.createElement('div');
-                letterHeader.className = 'letter-header';
-                letterHeader.textContent = currentLetter;
-                contactList.appendChild(letterHeader);
             }
 
             const contactElement = document.createElement('div');
@@ -89,16 +79,13 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    // Open the add contact popup
-    addContactButton.addEventListener('click', function() {
-        addContactPopup.classList.add('show');
-        contactPage.classList.add('with-popup');
+    // Handle panel functionality for the "Add Contact" section
+    addContactButton.addEventListener('click', () => {
+        wrapper.classList.toggle('side-panel-open');
     });
 
-    // Close the add contact popup
-    closePopupButton.addEventListener('click', function() {
-        addContactPopup.classList.remove('show');
-        contactPage.classList.remove('with-popup');
+    closePopupButton.addEventListener('click', () => {
+        wrapper.classList.remove('side-panel-open');
     });
 
     // Handle add contact form submission
