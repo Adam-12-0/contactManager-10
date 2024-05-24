@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Load contacts from the API
     function loadContacts() {
-        fetch('http://cop4331-summer.com/LAMPAPI/load.php', {
+        fetch('http://localhost/contactManager-10/LAMPAPI/load.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
