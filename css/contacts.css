@@ -1,22 +1,31 @@
+/* Update contacts.css */
+
 body {
-    background-color: black;
+    background-color: #121212;
     color: white;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
     height: 100vh;
     overflow: hidden;
 }
 
+.welcome-message {
+    color: white;
+    font-size: xx-large;
+    text-align: center;
+    margin-top: 10px;
+}
+
 .wrapper {
     display: flex;
     height: 100vh;
-    padding-top: 50px;
+    transition: margin-right 0.5s ease-in-out;
 }
 
 #add-contact-button {
     place-items: center;
-    color: #ffffff;
-    background: #176bc4;
+    color: blue;
+    background: black;
     border: none;
     border-radius: 10px;
     outline: none;
@@ -24,27 +33,24 @@ body {
     margin-left: auto;
     margin-bottom: 0px;
     width: 10%;
-    font-size: 20px;
+    font-size: xx-large;
     font-weight: 700;
     text-align: center;
 }
 
 .side-panel {
-    display: none;
-    flex-shrink: 0;
-    padding-right: 25px;
-    color: #ffffff;
-    flex-grow: 1;
-    flex-direction: column;
-    box-sizing: border-box;
-    align-items: center; 
-    /* justify-content: center; */
-    width: 30%;
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 26%;
+    height: 100vh;
+    background-color: black;
+    overflow-y: auto;
+    transition: right 0.5s ease-in-out;
 }
 
 .side-panel-open .side-panel {
-    /* display: flex; */
-    display: initial;
+    right: 0;
 }
 
 .side-panel-open .sp-icon-open {
@@ -59,34 +65,30 @@ body {
     display: none !important;
 }
 
-.vertical-menu {
-    display: flex;
-    flex-grow: 1;
-    flex-direction: column;
-    flex-shrink: 0;
-    box-sizing: border-box;
-    padding-left: 25px;
-    /* justify-content: center; */
-    width: 10%;
-}
-
 .search-section {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     overflow-y: auto;
-    padding-left: 10px;
-    padding-right: 10px;
     align-items: center;
-    width: 60%;
-    /* padding-top: 50px; */
+    width: calc(100% - 30%);
+    transition: width 0.5s ease-in-out;
+}
+
+.search-section-full {
+    width: 100%;
+    transition: width 0.5s ease-in-out;
 }
 
 .search-header {
-    width: 100%; 
-    margin-right: 0px;
-    margin-left: 0px;
+    width: 100%;
+    padding: 10px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .search-contacts-title {
@@ -95,35 +97,47 @@ body {
 
 #search-bar {
     margin-bottom: 40px;
+    background-color: #121212;
 }
 
-.logo-placeholder,
-.theme-button,
-.docs-button,
-.log-out-button  {
-    display: block;
-    padding-bottom: 80px;
-    padding-left: 0px;
-    color: #2F84DE;
-    border: none;
+.vertical-menu {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+    box-sizing: border-box;
+    font-size: x-large;
     background-color: black;
-    cursor: pointer;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 20px;
+}
+
+.menu-item {
+    display: block;
+    color: cyan;
     font-weight: 700;
-    font-size: 16px;
+    text-decoration: none;
+    padding-bottom: 30px;
+    cursor: pointer;
+    margin-bottom: 20px;  /* Ensure vertical spacing */
+}
+
+.menu-item:hover {
+    text-decoration: underline;
 }
 
 .form-control {
-    background-color: black;
+    background-color: #121212;
     color: white;
-    border: 1px solid #555555;
-    margin-bottom: 10px;
+    border: 1px solid white;
+    margin-bottom: 30px;
 } 
 
 .form-control:focus {
     background-color: black;
     color: white;
-    border: 1px solid #176bc4; 
-    box-shadow: 0 0 5px 2px #176bc4;
+    border: 1px solid blue; 
+    box-shadow: 0 0 5px 2px blue;
 }
 
 .invalid-feedback {
@@ -133,40 +147,53 @@ body {
 
 .is-invalid~.invalid-feedback {
     display: block;
-    color: #E24545;
+    color: red;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    display: none;
+    margin-bottom: 20px;
 }
 
 #close-popup-button {
-    background-color: #b64747;
+    background-color: red;
     color: white;
-    margin: 0px ;
     margin-bottom: 15px;
 }
 
 .add-button,
 #close-popup-button {
     width: 100%;
-    flex-shrink: 0;
     display: block;
     place-items: center;
-    border: none;
     border-radius: 5px;
     cursor: pointer;
+    border: none;
 }
 
 .add-button, 
 .add-button:hover {
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: #176bc4;
+    background-color: blue;
 }
 
 .form-container {
-    max-width: 700px;
+    max-width: 100%;
     width: 100%;
-    padding: 20px;
-    border: 1px solid #555555;
+    padding: 40px;
     border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.contact-container {
+    max-width: 100%;
+    width: 100%;
+    padding: 0px;
+    border-radius: 10px;
+    box-sizing: border-box;
 }
 
 .contact-info p {
@@ -181,25 +208,48 @@ body {
 .contact-info {
     flex: 1;
     flex-direction: column;
-    padding: 50px 0;
 }
 
 .contact {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #555555;
-    padding: 50px 0;
+    border-bottom: 1px solid white;
+    padding: 40px;
+    font-size: medium;
+    align-items: center;
+    cursor: pointer;
+}
+
+.contact:hover {
+    background-color: #1a1a1a;
 }
 
 #contact-list {
     width: 100%;
-    border-top: 1px solid #555555;
     display: flex;
     flex-direction: column;
 }
 
-/* comment classes below to see all sections with border format: */
-.search-container, 
-.menu-container {
-    border: none;
+.contact-details {
+    text-align: left;
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    color: white;
+    font-size: x-large;
+    padding: 10px;
+    padding-left: 0;  /* Removed padding to align with vertical menu */
+    border-bottom: 2px solid white;
+    z-index: 10; /* Ensure it is above other content */
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #121212;
 }

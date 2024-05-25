@@ -7,4 +7,8 @@ body {
     align-items: center;
     height: 100vh;
     font-family: 'Courier New', Courier, monospace;
+    background-image: url('../images/home.png');
+    background-size: cover; /* This ensures the image covers the entire background */
+    background-repeat: no-repeat; /* This prevents the image from repeating */
+    background-position: center center; /* This centers the image */
 }

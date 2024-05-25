@@ -1,10 +1,12 @@
 /* CSS Styling for Login and Register pages */
 .form-container {
-    max-width: 450px;
+    max-width: 500px;
     width: 100%;
     padding: 20px;
-    border: 1px solid #555555;
+    border: 1px solid white;
     border-radius: 10px;
+    background-color: black;
+    color: white;
 }
 
 .username-header,
@@ -15,7 +17,7 @@
 .form-control {
     background-color: black;
     color: white;
-    border: 1px solid #555555;
+    border: 1px solid white;
     transition: all 0.3s ease;
     visibility: hidden;
 }
@@ -23,8 +25,8 @@
 .form-control:focus {
     background-color: black;
     color: white;
-    border: 1px solid #176bc4; 
-    box-shadow: 0 0 5px 2px #176bc4;
+    border: 1px solid blue; 
+    box-shadow: 0 0 5px 2px blue;
 }
 
 .username-header,
@@ -38,9 +40,10 @@
 
 .login-button,
 .register-button {
-    background-color: #176bc4;
-    border-color: #176bc4;
+    background-color: blue;
+    color: white;
     margin-top: 20px;
+    border: none;
 }
 
 .login-link,
@@ -48,12 +51,12 @@
     display: block;
     text-align: center;
     margin-top: 15px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .login-link a,
 .register-link a {
-    color: #2f84de;
-    text-decoration: none;
+    color: blue;
     cursor: pointer;
     font-weight: 700;
 }
@@ -63,20 +66,14 @@
     text-decoration: underline;
 }
 
-.valid-feedback,
 .invalid-feedback {
     display: none;
     font-size: 0.9em;
 }
 
-.is-valid~.valid-feedback {
-    display: block;
-    color: green;
-}
-
 .is-invalid~.invalid-feedback {
     display: block;
-    color: #E24545;
+    color: red;
 }
 
 .typing-effect {

@@ -1,62 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Contacts</title>
-        <!-- <link rel="stylesheet" href="css/general.css"> -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/contacts.css">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/contacts.css">
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Left vertical menu -->
+        <div class="vertical-menu">
+            <div class="form-container menu-container">
+                <!-- <div class="logo-placeholder">
+                    (Logo and title)
+                </div> -->
+                <a href="#" class="menu-item">Theme</a>
+                <a href="https://app.swaggerhub.com/apis-docs/JENKINSLCHRIS/smallprojectapi/1.0.0#/Search/search" class="menu-item" target="_blank">Docs</a>
+                <a href="#" class="menu-item">Log out</a>
+            </div>
+        </div>
 
-    <body>
-        <div class="wrapper">
-            <!-- Left vertical menu -->
-            <div class="vertical-menu">
-                <div class="form-container menu-container">
-                    <div class="logo-placeholder">
-                        (Logo and title)
-                    </div>
-                    <button class="theme-button">Theme</button>
-                    <button class="docs-button">Docs</button>
-                    <button class="log-out-button">Log out</button>
+        <!-- Main content container -->
+        <div class="main-content">
+            <!-- "Search Contact" header section -->
+            <div class="search-header">
+                <div class="contact-container">
+                    <div class="welcome-message" id="welcomeMessage">Welcome <span id="username"></span>!</div>
+                    <button class="btn btn-primary btn-block" id="add-contact-button">+</button>
+                    <h2 class="search-contacts-title">Search for contacts</h2>
+                    <input class="form-control" type="text" id="search-bar" placeholder="&#128269; enter a name, organization, email, or phone number...">
                 </div>
             </div>
-
-            <!-- "Search Contact" section-->
-            <div class="search-section" id="contact-page">
-                <div class="form-container search-container">
-                    <div class="search-header">
-                        <button class="btn btn-primary btn-block" id="add-contact-button">+</button>
-                        <p class="search-contacts-title">Search for contacts</p>
-                        <input class="form-control" type="text" id="search-bar" placeholder="&#128269; enter a name, organization, email, or phone number...">
-                        <div id="contact-list"></div>
-                    </div>
                     
-                </div>
-            </div>
-
-            <!-- "Add Contact" section -->
-            <div class="side-panel">
-                <div class="form-container">
-                    <form id="add-contact-form">
-                        <p class="add-contact-title">Add a contact</p>
-                        <label for="organization">Organization:</label>
-                        <input class="form-control" type="text" id="organization" name="organization">
-                        <label for="last_name">Last name:</label>
-                        <input class="form-control" type="text" id="last_name" name="last_name">
-                        <label for="first_name">First name:</label>
-                        <input class="form-control" type="text" id="first_name" name="first_name">
-                        <label for="phone_number">Phone number:</label>
-                        <input class="form-control" type="text" id="phone_number" name="phone_number">
-                        <label for="email_address">Email:</label>
-                        <input class="form-control" type="email" id="email_address" name="email_address">
-                        <button class="btn btn-primary btn-block add-button" type="submit">Add</button>
-                        <button class="btn btn-primary btn-block" type="button" id="close-popup-button">Close</button>
-                    </form>
+            <!-- Contacts list section -->
+            <div class="contacts-list search-section search-section-full" id="contact-page">
+                <div class="contact-container search-container">
+                    <div id="contact-list"></div>
                 </div>
             </div>
         </div>
-        <script src="js/contacts.js"></script>
-    </body>
+
+        <!-- "Contact Form" section -->
+        <div class="side-panel">
+            <div class="form-container">
+                <form id="contact-form">
+                    <h2 class="contact-form-title">Contact Form</h2>
+                    <label for="organization">Organization:</label>
+                    <input class="form-control" type="text" id="organization" name="organization">
+                    <div class="invalid-feedback" id="organizationFeedback"></div>
+                    <label for="last_name">Last name:</label>
+                    <input class="form-control" type="text" id="last_name" name="last_name">
+                    <div class="invalid-feedback" id="last_nameFeedback"></div>
+                    <label for="first_name">First name:</label>
+                    <input class="form-control" type="text" id="first_name" name="first_name">
+                    <div class="invalid-feedback" id="first_nameFeedback"></div>
+                    <label for="phone_number">Phone number:</label>
+                    <input class="form-control" type="text" id="phone_number" name="phone_number">
+                    <div class="invalid-feedback" id="phone_numberFeedback"></div>
+                    <label for="email_address">Email:</label>
+                    <input class="form-control" type="email" id="email_address" name="email_address">
+                    <div class="invalid-feedback" id="email_addressFeedback"></div>
+                    <div class="error-message" id="bottomErrorFeedback"></div>
+                    <button class="btn btn-primary btn-block contact-button" type="submit">Add</button>
+                    <button class="btn btn-primary btn-block" type="button" id="close-popup-button">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/contacts.js"></script>
+</body>
 </html>
