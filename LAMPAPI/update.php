@@ -79,14 +79,15 @@ if (!empty($errors)) {
 
 // Prepare and execute the SQL statement to update the contact
 try {
-    $stmt = $conn->prepare("UPDATE Contacts SET organization = :organization, last_name = :last_name, first_name = :first_name, phone_number = :phone_number, email_address = :email_address, sorting_key = CONCAT_WS(' ', :organization, :last_name, :first_name, :email_address, :phone_number) WHERE id = :id");
+    $stmt = $conn->prepare("UPDATE Contacts SET organization = :organization, last_name = :last_name, first_name = :first_name, phone_number = :phone_number, email_address = :email_address, sorting_key = CONCAT(:user_id, :organization, :last_name, :first_name, :email_address, :phone_number) WHERE id = :id");
     $stmt->bindParam(':organization', $data->organization);
     $stmt->bindParam(':last_name', $data->last_name);
     $stmt->bindParam(':first_name', $data->first_name);
     $stmt->bindParam(':phone_number', $phone_number);
     $stmt->bindParam(':email_address', $data->email_address);
+    $stmt->bindParam(':user_id', $data->user_id); // Add this line to bind the user_id parameter
     $stmt->bindParam(':id', $data->id);
-    $stmt->execute();
+    $stmt->execute();    
 } catch (PDOException $e) {
     echo json_encode(array("error" => "Failed to update contact: " . $e->getMessage()));
     exit();

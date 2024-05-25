@@ -24,16 +24,22 @@ try {
 }
 
 // Query to load contacts
-$sql = "SELECT id, organization, last_name, first_name, phone_number, email_address, user_id 
+$sql = "SELECT id, organization, last_name, first_name, phone_number, email_address, user_id, sorting_key
         FROM Contacts 
         WHERE user_id = :user_id 
-        ORDER BY SORTING_KEY COLLATE utf8mb4_general_ci ASC";
+        ORDER BY sorting_key COLLATE utf8mb4_general_ci ASC";
 
 try {
     $stmt = $conn->prepare($sql);
     $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
     $stmt->execute();
     $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Process the sorting_key to remove the user_id at the front
+    foreach ($contacts as &$contact) {
+        $user_id_length = strlen($contact['user_id']);
+        $contact['sorting_key'] = substr($contact['sorting_key'], $user_id_length);
+    }
 
     echo json_encode(array("contacts" => $contacts));
 } catch (PDOException $e) {
