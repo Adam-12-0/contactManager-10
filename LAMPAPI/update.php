@@ -38,21 +38,33 @@ try {
     exit();
 }
 
-// Check if the phone number or email already exists for other contacts
+// Get current contact ID
+$contact_id = $data->id;
+
+// Retrieve the user_id of the current contact
+$stmt = $conn->prepare("SELECT user_id FROM Contacts WHERE id = :contact_id");
+$stmt->bindParam(':contact_id', $contact_id);
+$stmt->execute();
+$user_id = $stmt->fetchColumn();
+
+// Check if the phone number already exists for other contacts with the same user_id
 if (!empty($data->phone_number)) {
-    $stmt = $conn->prepare("SELECT COUNT(*) FROM Contacts WHERE phone_number = :phone_number AND id != :id");
-    $stmt->bindParam(':phone_number', $phone_number);
-    $stmt->bindParam(':id', $data->id);
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM Contacts WHERE phone_number = :phone_number AND id != :contact_id AND user_id = :user_id");
+    $stmt->bindParam(':phone_number', $data->phone_number);
+    $stmt->bindParam(':contact_id', $contact_id);
+    $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
     if ($stmt->fetchColumn() > 0) {
         $errors[] = "Phone number already exists";
     }
 }
 
+// Check if the email address already exists for other contacts with the same user_id
 if (!empty($data->email_address)) {
-    $stmt = $conn->prepare("SELECT COUNT(*) FROM Contacts WHERE email_address = :email_address AND id != :id");
+    $stmt = $conn->prepare("SELECT COUNT(*) FROM Contacts WHERE email_address = :email_address AND id != :contact_id AND user_id = :user_id");
     $stmt->bindParam(':email_address', $data->email_address);
-    $stmt->bindParam(':id', $data->id);
+    $stmt->bindParam(':contact_id', $contact_id);
+    $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
     if ($stmt->fetchColumn() > 0) {
         $errors[] = "Email address already exists";
