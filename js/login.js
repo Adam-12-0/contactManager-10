@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 loginUsername.classList.remove("is-invalid");
                 loginPassword.classList.remove("is-invalid");
                 localStorage.setItem("user_id", data.user_id);
+                localStorage.setItem("username", username);
                 window.location.href = "contacts.html";
             }
         } catch (error) {

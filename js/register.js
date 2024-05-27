@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     } else {
                         // Store the user ID in local storage
                         localStorage.setItem("user_id", loginData.user_id);
+                        localStorage.setItem("username", username);
                         window.location.href = "contacts.html";
                     }
                 } catch (loginError) {

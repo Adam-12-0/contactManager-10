@@ -45,8 +45,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    // Render contacts to the DOM
-    function renderContacts(contacts) {
+    // Render contacts to the DOM with optional highlighting
+    function renderContacts(contacts, query = '') {
         console.log("renderContacts function called");
         contactList.innerHTML = '';
 
@@ -77,13 +77,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
             const contactNameElement = document.createElement('div');
             contactNameElement.className = 'contact-name';
-            contactNameElement.textContent = displayName;
+            contactNameElement.innerHTML = highlightText(displayName, query);
 
             const contactDetailsElement = document.createElement('div');
             contactDetailsElement.className = 'contact-details';
             contactDetailsElement.innerHTML = `
-                <div>${contact.email_address || ''}</div>
-                <div>${contact.phone_number || ''}</div>
+                <div>${highlightText(contact.email_address || '', query)}</div>
+                <div>${highlightText(contact.phone_number || '', query)}</div>
             `;
 
             contactElement.appendChild(contactNameElement);
@@ -92,19 +92,48 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log("Added contact element: ", displayName);
         });
     }
-    
+
+    // Highlight the matching parts of the text
+    function highlightText(text, query) {
+        if (!query) return text;
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
     // Handle search functionality
     searchBar.addEventListener('input', function() {
         const query = searchBar.value.toLowerCase();
-        const contacts = document.querySelectorAll('.contact');
-        contacts.forEach(contact => {
-            const contactText = contact.textContent.toLowerCase();
-            if (contactText.includes(query)) {
-                contact.style.display = 'block';
-            } else {
-                contact.style.display = 'none';
-            }
-        });
+        console.log("Search query:", query); // Log the query
+
+        if (query) {
+            console.log("Filtering contacts based on query");
+            fetch('http://localhost/contactManager-10/LAMPAPI/search.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_id: localStorage.getItem('user_id'), search_string: query })
+            })
+            .then(response => {
+                console.log("API response received");
+                return response.json();
+            })
+            .then(data => {
+                console.log("API response data: ", data);
+                if (data.contacts) {
+                    console.log("Contacts found: ", data.contacts.length);
+                    renderContacts(data.contacts, query);
+                } else {
+                    console.error('Error: No contacts returned');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        } else {
+            console.log("Query is empty, reloading contacts"); // Log when the query is empty
+            loadContacts(); // Reload contacts if the query is empty
+        }
     });
 
     // Handle panel functionality for the "Add Contact" section
@@ -134,19 +163,19 @@ document.addEventListener("DOMContentLoaded", function() {
             email_address: formData.get('email_address'),
             user_id: localStorage.getItem('user_id')
         };
-    
+
         const url = currentContactId ? "LAMPAPI/update.php" : "LAMPAPI/add.php";
         if (currentContactId) contactData.id = currentContactId;
-    
+
         try {
             const response = await fetch(url, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(contactData),
             });
-    
+
             const data = await response.json();
-    
+
             if (data.error) {
                 handleErrors(data.error);
             } else {
@@ -162,11 +191,11 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Error:", error);
         }
     });
-    
+
     function handleErrors(errors) {
         clearErrors();
         const errorMessage = errors.join('\n');
-        
+
         // Display all errors at the bottom of the form
         const bottomErrorFeedback = document.getElementById('bottomErrorFeedback');
         if (bottomErrorFeedback) {
@@ -223,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function() {
             bottomErrorFeedback.style.display = 'none';
         }
     }
-    
+
     function showUpdateForm(contact) {
         currentContactId = contact.id;
         wrapper.classList.add('side-panel-open');
