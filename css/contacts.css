@@ -1,6 +1,51 @@
+/* (Default) dark theme variables */
+:root {
+    --background-color: black;
+    --text-color: white;
+    --border-color: white;
+    --focus-background-color: rgb(18,18,18);
+    --focus-text-color: white;
+    --focus-border: 1px solid rgb(0, 97, 200);
+    --focus-box-shadow: 0 0 5px 2px rgb(0, 97, 200);
+    --button-background-color: rgb(0, 97, 200);
+    --button-hover-color: rgb(42, 122, 207);
+    --form-backdrop-filter: blur(5px);
+    --button-text-color: white;
+    --link-color: rgb(141, 199, 246);
+    --contact-select-border: 2px solid white;
+    --contact-selected-hover-color: #1a1a1a;
+    --contact-selected-color: blue;
+    --blurred-background: rgba(0, 0, 0, 0.8);
+    --input-box-color: rgb(18,18,18);
+}
+
+/* Light Theme variables */
+body.light-theme {
+    --background-color: rgb(246, 246, 246);
+    --text-color: black;
+    --border-color: black;
+    --input-box-color: rgb(222, 223, 225);
+    --focus-background-color: rgb(222, 223, 225);
+    --focus-text-color: black;
+    --focus-border: 1px solid rgb(0, 97, 200);
+    --focus-box-shadow: 0 0 5px 2px rgb(0, 97, 200);
+    --button-background-color: rgb(0, 97, 200);
+    --button-hover-color: rgb(0, 60, 124);
+    --button-text-color: white;
+    --form-backdrop-filter: blur(5px);
+    --link-color: rgb(7, 79, 138);
+    --contact-selected-hover-color: #c0c0c0; 
+    --contact-selected-color: rgb(55, 115, 161);
+    --blurred-background: rgb(255, 255, 255, 0.8);
+    /* TODO: review contact selection colors for light theme */
+}
+
 body {
-    background-color: #121212;
-    color: white;
+    background-image: url('../images/home.png');
+    background-size: cover; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: var(--text-color);
     font-family: Arial, Helvetica, sans-serif;
     margin: 0px;
     height: 100vh;
@@ -8,9 +53,10 @@ body {
 }
 
 .welcome-message {
-    color: white;
-    font-size: xx-large;
+    color: var(--text-color);
     text-align: center;
+    margin-top: 30px;
+    font-size: xx-large;
     white-space: nowrap;
     overflow: hidden;
     position: relative;
@@ -43,27 +89,34 @@ body {
 
 #add-contact-button, #delete-contact-button {
     place-items: center;
-    color: white;
-    background: black;
+    color: var(--text-color);
+    background: var(--background-color);
     border: none;
-    border-radius: 10px;
     outline: none;
     cursor: pointer;
     margin-left: auto;
     margin-bottom: 0px;
     width: 10%;
     font-size: xx-large;
-    font-weight: 700;
+    font-weight: 500;
     text-align: center;
     display: none;
+    padding: 0px;
+    font-size: xx-large;
 }
 
 #add-contact-button {
     display: block;
+    color: var(--text-color);
+}
+
+#add-contact-button:hover {
+    color: var(--link-color);
+    font-weight: 700;
 }
 
 #delete-contact-button {
-    color: red;  /* Make the trash button red */
+    color: red; 
 }
 
 /* Add styles for select mode */
@@ -71,7 +124,7 @@ body {
     display: none;
     width: 20px;
     height: 20px;
-    border: 2px solid white;
+    border: var(--contact-select-border);
     border-radius: 50%;
     margin-right: 15px;
 }
@@ -81,17 +134,18 @@ body {
 }
 
 .contact.selected .select-bullet {
-    background-color: blue;
-    border-color: blue;
+    background-color: var(--contact-selected-color);
+    border-color: var(--contact-selected-color);
 }
 
 .side-panel {
+    margin-top: 20px;
     position: fixed;
     right: -100%;
     top: 0;
     width: 26%;
     height: 100vh;
-    background-color: black;
+    background-color: var(--background-color);
     overflow-y: auto;
     transition: right 0.5s ease-in-out;
 }
@@ -130,21 +184,26 @@ body {
 
 .search-header {
     width: 100%;
-    background-color: black;
+    padding-bottom: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: var(--background-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: var(--text-color);
 }
 
-.search-contacts-title {
+.search-contacts-title,
+.contact-form-title {
+    font-size: x-large;
     margin-bottom: 10px;
 }
 
 #search-bar {
     margin-bottom: 40px;
-    background-color: #121212;
-    width: 90%;
+    background-color: var(--input-box-color);
 }
 
 .highlight {
@@ -157,38 +216,40 @@ body {
     width: 15%;
     box-sizing: border-box;
     font-size: x-large;
-    background-color: black;
     justify-content: center;
     align-items: flex-start;
-    padding-left: 20px;
+    padding-left: 10px;
+    background-color: var(--blurred-background);
+    backdrop-filter: var(--form-backdrop-filter);
 }
 
 .menu-item {
     display: block;
-    color: cyan;
+    color: var(--link-color);
     font-weight: 700;
-    text-decoration: none;
     padding-bottom: 30px;
     cursor: pointer;
-    margin-bottom: 20px;  /* Ensure vertical spacing */
+    margin-bottom: 20px;
 }
 
-.menu-item:hover {
+.menu-item:hover,
+#themeToggle:hover {
     text-decoration: underline;
+    color: var(--link-color)
 }
 
 .form-control {
-    background-color: #121212;
-    color: white;
-    border: 1px solid white;
+    background-color: var(--input-box-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
     margin-bottom: 30px;
 } 
 
 .form-control:focus {
-    background-color: black;
-    color: white;
-    border: 1px solid blue; 
-    box-shadow: 0 0 5px 2px blue;
+    background-color: var(--focus-background-color);
+    color: var(--text-color);
+    border: var(--focus-border); 
+    box-shadow: var(--focus-box-shadow);
 }
 
 .invalid-feedback {
@@ -210,11 +271,11 @@ body {
 
 #close-popup-button {
     background-color: red;
-    color: white;
+    color: var(--button-text-color);
     margin-bottom: 15px;
 }
 
-.add-button,
+.contact-button,
 #close-popup-button {
     width: 100%;
     display: block;
@@ -224,16 +285,17 @@ body {
     border: none;
 }
 
-.add-button, 
-.add-button:hover {
+.contact-button {
     margin-top: 20px;
     margin-bottom: 20px;
-    background-color: blue;
+}
+
+.contact-button:hover {
+    background-color: var(--button-hover-color);
 }
 
 .form-container {
-    /* max-width: 100%; */
-    /* height: 20px; */
+    max-width: 100%;
     width: 100%;
     padding: 40px;
     border-radius: 10px;
@@ -241,13 +303,16 @@ body {
 }
 
 .contact-container {
+    max-width: 100%;
     width: 100%;
+    padding: 0px;
     height: 70%;
     border-radius: 10px;
     box-sizing: border-box;
 }
 
 .contact-info p {
+    margin: 0;
     font-size: 0.9em;
 }
 
@@ -256,22 +321,29 @@ body {
     flex-direction: column;
 }
 
+.selected-count {
+    float: right;
+    font-size: large; 
+    margin-right: 20px; 
+    color: var(--text-color);
+}
+
 .sticky-header {
     position: sticky;
     top: 0;
-    background-color: black;
-    color: white;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-size: x-large;
     padding: 10px;
-    padding-left: 0;
-    border-bottom: 2px solid white;
+    padding-left: 40px;
+    border-bottom: var(--contact-select-border);
     z-index: 10;
 }
 
 .contact {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid white;
+    border-bottom: 1px solid var(--border-color);
     padding: 40px;
     font-size: medium;
     align-items: center;
@@ -280,13 +352,17 @@ body {
 
 .contact:hover,
 .contact.selected {
-    background-color: #1a1a1a;
+    background-color: var(--contact-selected-hover-color);
 }
 
 #contact-list {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+#contact-page {
+    background-color: var(--input-box-color);
 }
 
 .contact-details {
@@ -298,5 +374,23 @@ body {
     flex-direction: column;
     flex-grow: 1;
     overflow-y: auto;
-    background-color: #121212;
+    background-color: var(--input-box-color);
+}
+
+#themeToggle {
+    font-size: 24px;
+    padding: 0px;
+    background: none;
+    color: var(--link-color);
+    font-weight: 700;
+    border: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 50px;
+    text-align: left;
+}
+
+.top-header {
+    display: inline;
 }

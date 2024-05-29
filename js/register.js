@@ -8,6 +8,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const registerButton = document.querySelector("button[type='submit']");
     const loginLink = document.getElementById("loginLink");
     const togglePassword = document.getElementById("togglePassword");
+    const themeToggle = document.getElementById('themeToggle');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        if (document.body.classList.contains('light-theme')) {
+            themeToggle.textContent = '☀️';
+            localStorage.setItem('theme', 'light');
+        } else {
+            themeToggle.textContent = '🌙';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
 
     welcomeMessage.addEventListener("animationend", () => {
         introMessage.style.display = "block";
@@ -24,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
             usernameInput.classList.add("visible");
             passwordInput.classList.add("visible");
             registerButton.classList.add("visible");
+            themeToggle.classList.add("visible");
             loginLink.classList.add("visible");
             registerForm.style.display = "block";
         }, 500);

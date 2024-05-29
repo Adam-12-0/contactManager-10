@@ -4,8 +4,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.getElementById("loginForm");
     const loginUsername = document.getElementById("loginUsername");
     const loginPassword = document.getElementById("loginPassword");
+    const loginButton = document.getElementById("loginButton")
     const toggleLoginPassword = document.getElementById("toggleLoginPassword");
     const registerLink = document.getElementById("registerLink");
+    const themeToggle = document.getElementById('themeToggle');
+
+    themeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('light-theme');
+        if (document.body.classList.contains('light-theme')) {
+            themeToggle.textContent = '☀️';
+            localStorage.setItem('theme', 'light');
+        } else {
+            themeToggle.textContent = '🌙';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
 
     welcomeMessage.addEventListener("animationend", () => {
         introMessage.style.display = "block";
@@ -17,6 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
             loginUsername.classList.add("visible");
             loginPassword.classList.add("visible");
             registerLink.classList.add("visible");
+            loginButton.classList.add("visible");
+            themeToggle.classList.add("visible");
             loginForm.style.display = "block";
         }, 500);
     });

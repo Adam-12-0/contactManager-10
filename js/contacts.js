@@ -7,19 +7,52 @@ document.addEventListener("DOMContentLoaded", function() {
     const wrapper = document.querySelector('.wrapper');
     const searchSection = document.querySelector('.search-section');
     const usernameSpan = document.getElementById('username');
+    const themeToggle = document.getElementById('themeToggle');
+    const logoutLink = document.getElementById('logoutLink');
     let currentContactId = null;
-
+    let selectedContacts = new Set();
+    let longPressTimer;
+    let longPressDetected = false; // Flag to indicate long press
+    
     console.log("DOMContentLoaded event fired");
-
+    
     // Set the welcome message with the username
     const username = localStorage.getItem('username');
     if (username) {
         usernameSpan.textContent = username;
     }
-
+    
+    // Check the saved theme in local storage
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-theme');
+        themeToggle.textContent = 'Theme ☀️';
+    } else {
+        themeToggle.textContent = 'Theme 🌙';
+    }
+    
+    // Light/dark theme
+    themeToggle.addEventListener('click', () => {
+        console.log("Theme select");
+        document.body.classList.toggle('light-theme');
+        if (document.body.classList.contains('light-theme')) {
+            themeToggle.textContent = 'Theme ☀️';
+            localStorage.setItem('theme', 'light');
+        } else {
+            themeToggle.textContent = 'Theme 🌙';
+            localStorage.setItem('theme', 'dark');
+        }
+    });
+    
+    // Log out functionality
+    logoutLink.addEventListener('click', (event) => {
+        event.preventDefault();
+        localStorage.removeItem('user_id');
+        localStorage.removeItem('username');
+        window.location.href = 'login.html';
+    });
+    
     // Load contacts from the API
     function loadContacts() {
-        console.log("loadContacts function called");
         fetch('http://localhost/contactManager-10/LAMPAPI/load.php', {
             method: 'POST',
             headers: {
@@ -28,13 +61,10 @@ document.addEventListener("DOMContentLoaded", function() {
             body: JSON.stringify({ user_id: localStorage.getItem('user_id') })
         })
         .then(response => {
-            console.log("API response received");
             return response.json();
         })
         .then(data => {
-            console.log("API response data: ", data);
             if (data.contacts) {
-                console.log("Contacts found: ", data.contacts.length);
                 renderContacts(data.contacts);
             } else {
                 console.error('Error: No contacts returned');
@@ -44,17 +74,15 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error('Error:', error);
         });
     }
-
+    
     // Render contacts to the DOM with optional highlighting
     function renderContacts(contacts, query = '') {
         console.log("renderContacts function called");
         contactList.innerHTML = '';
-
         let currentLetter = '';
         contacts.forEach(contact => {
             let sortingKeyFirstLetter = contact.sorting_key.charAt(0).toUpperCase();
-            console.log("Processing contact: ", contact);
-
+            
             // Create a new sticky header if the first letter changes
             if (sortingKeyFirstLetter !== currentLetter) {
                 currentLetter = sortingKeyFirstLetter;
@@ -62,51 +90,154 @@ document.addEventListener("DOMContentLoaded", function() {
                 headerElement.className = 'sticky-header';
                 headerElement.textContent = currentLetter;
                 contactList.appendChild(headerElement);
-                console.log("Added sticky header: ", currentLetter);
             }
-
+            
             let displayName = contact.organization || contact.last_name || contact.first_name || contact.email_address || contact.phone_number;
             if (contact.organization && contact.last_name && contact.first_name) {
                 displayName = `${contact.first_name} ${contact.last_name} ${contact.organization}`;
             }
-
+            
             const contactElement = document.createElement('div');
             contactElement.className = 'contact';
             contactElement.dataset.contactId = contact.id;
-            contactElement.addEventListener('click', () => showUpdateForm(contact));
-
+            
             const contactNameElement = document.createElement('div');
             contactNameElement.className = 'contact-name';
             contactNameElement.innerHTML = highlightText(displayName, query);
-
+            
             const contactDetailsElement = document.createElement('div');
             contactDetailsElement.className = 'contact-details';
             contactDetailsElement.innerHTML = `
-                <div>${highlightText(contact.email_address || '', query)}</div>
-                <div>${highlightText(contact.phone_number || '', query)}</div>
+            <div>${highlightText(contact.email_address || '', query)}</div>
+            <div>${highlightText(contact.phone_number || '', query)}</div>
             `;
-
+            
             contactElement.appendChild(contactNameElement);
             contactElement.appendChild(contactDetailsElement);
+            
+            // Add long press event for selection mode
+            contactElement.addEventListener('mousedown', (event) => {
+                console.log("Mouse down.");
+                if (event.button === 0) {
+                    longPressTimer = setTimeout(() => {
+                        longPressDetected = true;
+                        toggleSelection(contactElement);
+                    }, 1000);
+                }
+            });
+
+            contactElement.addEventListener('mouseup', () => {
+                console.log("Mouse up.");
+                clearTimeout(longPressTimer);
+            });
+
+            // Add click event to toggle selection if in selection mode
+            contactElement.addEventListener('click', (event) => {
+                if (longPressDetected) {
+                    console.log("INITAL TRIGGER: ", selectedContacts.size);
+                    event.preventDefault(); // Prevent the click if it was a long press
+                    longPressDetected = false; // Reset the flag
+                } else if (selectedContacts.size > 0) {
+                    console.log("SELECT RETRIGGER: ", selectedContacts.size);
+                    toggleSelection(contactElement);
+                } else {
+                    showUpdateForm(contact);
+                }
+            });
+
             contactList.appendChild(contactElement);
-            console.log("Added contact element: ", displayName);
         });
     }
 
+    function toggleSelection(contactElement) {
+        console.log("Selection enabled.");
+        const contactId = contactElement.dataset.contactId;
+        if (selectedContacts.has(contactId)) {
+            selectedContacts.delete(contactId);
+            contactElement.classList.remove('selected');
+            console.log("REMOVED");
+        } else {
+            selectedContacts.add(contactId);
+            contactElement.classList.add('selected');
+            console.log("SELECTED");
+        }
+    
+        updateSelectionUI();
+    }
+
+    function updateSelectionUI() {
+        const deleteButton = document.getElementById('delete-contact-button');
+        if (selectedContacts.size > 0) {
+            deleteButton.style.display = 'block';
+            addContactButton.style.display = 'none';
+    
+            // Update the sticky headers with the selected contacts count
+            const stickyHeaders = document.querySelectorAll('.sticky-header');
+            stickyHeaders.forEach(header => {
+                let countSpan = header.querySelector('.selected-count');
+                if (!countSpan) {
+                    countSpan = document.createElement('span');
+                    countSpan.className = 'selected-count';
+                    header.appendChild(countSpan);
+                }
+                header.querySelector('.selected-count').textContent = `(${selectedContacts.size} selected)`;
+            });
+            
+        } else {
+            deleteButton.style.display = 'none';
+            addContactButton.style.display = 'block';
+    
+            // Reset the sticky headers to their original state
+            const stickyHeaders = document.querySelectorAll('.sticky-header .selected-count');
+            stickyHeaders.forEach(span => {
+                span.parentNode.removeChild(span);
+            });
+        }
+    }
+
+    document.getElementById('delete-contact-button').addEventListener('click', () => {
+        if (selectedContacts.size > 0) {
+            if (confirm(`Are you sure you want to delete ${selectedContacts.size} contact(s)?`)) {
+                selectedContacts.forEach(contactId => {
+                    fetch('http://localhost/contactManager-10/LAMPAPI/delete.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: contactId })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error(`Error deleting contact ${contactId}: `, data.error);
+                        } else {
+                            console.log(`Contact ${contactId} deleted successfully`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                });
+
+                // Reload contacts after deletion
+                loadContacts();
+                selectedContacts.clear();
+                updateSelectionUI();
+            }
+        }
+    });
+    
     // Highlight the matching parts of the text
     function highlightText(text, query) {
         if (!query) return text;
         const regex = new RegExp(`(${query})`, 'gi');
         return text.replace(regex, '<span class="highlight">$1</span>');
     }
-
+    
     // Handle search functionality
     searchBar.addEventListener('input', function() {
         const query = searchBar.value.toLowerCase();
-        console.log("Search query:", query); // Log the query
-
         if (query) {
-            console.log("Filtering contacts based on query");
             fetch('http://localhost/contactManager-10/LAMPAPI/search.php', {
                 method: 'POST',
                 headers: {
@@ -115,13 +246,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 body: JSON.stringify({ user_id: localStorage.getItem('user_id'), search_string: query })
             })
             .then(response => {
-                console.log("API response received");
                 return response.json();
             })
             .then(data => {
-                console.log("API response data: ", data);
                 if (data.contacts) {
-                    console.log("Contacts found: ", data.contacts.length);
                     renderContacts(data.contacts, query);
                 } else {
                     console.error('Error: No contacts returned');
@@ -131,7 +259,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 console.error('Error:', error);
             });
         } else {
-            console.log("Query is empty, reloading contacts"); // Log when the query is empty
             loadContacts(); // Reload contacts if the query is empty
         }
     });

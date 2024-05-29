@@ -15,19 +15,20 @@
             <p id="introMessage" class="typing-effect login-message" style="display: none;">Log in to manage your contacts.</p>
             <form id="loginForm" class="needs-validation" novalidate style="display: none;">
                 <div class="form-group">
-                    <div class="username-header">*Username:</div>
+                    <div class="username-header">Username:*</div>
                     <input type="text" class="form-control" id="loginUsername" name="username" required>
                     <div class="invalid-feedback" id="usernameFeedback">Username is required.</div>
                 </div>
                 <div class="form-group password-wrapper">
-                    <div class="password-header">*Password:</div>
+                    <div class="password-header">Password:*</div>
                     <input type="password" class="form-control" id="loginPassword" name="password" required>
                     <i class="toggle-password" id="toggleLoginPassword">👁️</i>
                     <div class="invalid-feedback" id="passwordFeedback">Password is required.</div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block login-button">Log in</button>
-                <div class="register-link visible">Don't have an account? <a id="registerLink">Register</a></div>
+                <button type="submit" class="btn btn-primary btn-block login-button" id="loginButton">Log in</button>
+                <div class="register-link visible register-prompt">Don't have an account? <a id="registerLink">Register</a></div>
             </form>
+            <button id="themeToggle">🌙</button>
         </div>
         <script src="js/login.js"></script>
     </body>

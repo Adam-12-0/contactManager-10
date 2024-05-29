@@ -12,12 +12,9 @@
         <!-- Left vertical menu -->
         <div class="vertical-menu">
             <div class="form-container menu-container">
-                <!-- <div class="logo-placeholder">
-                    (Logo and title)
-                </div> -->
-                <a href="#" class="menu-item">Theme</a>
+                <button id="themeToggle">Theme 🌙</button>
                 <a href="https://app.swaggerhub.com/apis-docs/JENKINSLCHRIS/smallprojectapi/1.0.0#/Search/search" class="menu-item" target="_blank">Docs</a>
-                <a href="#" class="menu-item">Log out</a>
+                <a href="#" id="logoutLink" class="menu-item">Log out</a>
             </div>
         </div>
 
@@ -26,19 +23,24 @@
             <!-- "Search Contact" header section -->
             <div class="search-header">
                 <div class="contact-container">
-                    <div class="welcome-message" id="welcomeMessage">
-                        <span class="typing">Welcome <span id="username"></span>!</span>
+                    <div class="top-header">
+                        <div class="welcome-message" id="welcomeMessage">
+                            <span class="typing">Welcome <span id="username"></span>!</span>
+                        </div>
+                        <button id="add-contact-button">+</button>
                     </div>
-                    <button class="btn btn-primary btn-block" id="add-contact-button">+</button>
-                    <button class="btn btn-danger btn-block" id="delete-contact-button" style="display: none;">🗑</button>
-                    <h3 class="search-contacts-title">Search for contacts</h3>
-                    <input class="form-control" type="text" id="search-bar" placeholder="&#128269; enter a name, organization, email, or phone number...">
+                    <div class="search-container">
+                        <button class="btn btn-danger btn-block" id="delete-contact-button" style="display: none;">🗑</button>
+                        <h2 class="search-contacts-title">Search for contacts</h2>
+                        <input class="form-control" type="text" id="search-bar" placeholder="&#128269; enter a name, organization, email, or phone number...">
+                        <!-- <div id="no-results-message" style="display:none;"></div> -->
+                    </div>
                 </div>
             </div>
                     
             <!-- Contacts list section -->
             <div class="contacts-list search-section search-section-full" id="contact-page">
-                <div class="contact-container search-container">
+                <div class="contact-container">
                     <div id="contact-list"></div>
                 </div>
             </div>
