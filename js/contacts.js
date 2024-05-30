@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const contactForm = document.getElementById("contact-form");
     const wrapper = document.querySelector('.wrapper');
     const searchSection = document.querySelector('.search-section');
+    const contactHeaderFlex = document.querySelector('.contact-header-flex');
     const usernameSpan = document.getElementById('username');
     const themeToggle = document.getElementById('themeToggle');
     const logoutLink = document.getElementById('logoutLink');
@@ -90,12 +91,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 headerElement.className = 'sticky-header';
                 headerElement.textContent = currentLetter;
                 contactList.appendChild(headerElement);
+                console.log("Added sticky header: ", currentLetter);
             }
 
             let displayName = `${contact.first_name} ${contact.last_name}`;
 			
             let organizationName = `${contact.organization}`;
-
+            
             const contactElement = document.createElement('div');
             contactElement.className = 'contact';
             contactElement.dataset.contactId = contact.id;
@@ -107,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const contactOrgElement = document.createElement('div');
             contactOrgElement.className = 'organization-name';
             contactOrgElement.innerHTML = highlightText(organizationName, query);
-
+            
             const contactEmailElement = document.createElement('div');
             contactEmailElement.className = 'contact-email';
             contactEmailElement.innerHTML = highlightText(contact.email_address || '', query);
@@ -115,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const contactPhoneElement = document.createElement('div');
             contactPhoneElement.className = 'contact-phone';
             contactPhoneElement.innerHTML = highlightText(contact.phone_number || '', query);
-
+            
             contactElement.appendChild(contactNameElement);
             contactElement.appendChild(contactOrgElement);
             contactElement.appendChild(contactEmailElement);
@@ -276,6 +278,7 @@ document.addEventListener("DOMContentLoaded", function() {
         currentContactId = null;
         wrapper.classList.toggle('side-panel-open');
         searchSection.classList.toggle('search-section-full');
+        contactHeaderFlex.classList.toggle('contact-header-flex-full');
         contactForm.reset();
         document.querySelector('.contact-form-title').textContent = 'Contact Form';
         document.querySelector('.contact-button').textContent = 'Add';
@@ -284,6 +287,7 @@ document.addEventListener("DOMContentLoaded", function() {
     closePopupButton.addEventListener('click', () => {
         wrapper.classList.remove('side-panel-open');
         searchSection.classList.add('search-section-full');
+        contactHeaderFlex.classList.add('contact-header-flex-full');
     });
 
     // Handle form submission for both adding and updating contact
@@ -321,6 +325,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 loadContacts();
                 wrapper.classList.remove('side-panel-open');
                 searchSection.classList.add('search-section-full');
+                contactHeaderFlex.classList.add('contact-header-flex-full');
             }
         } catch (error) {
             console.error("Error:", error);
@@ -392,6 +397,7 @@ document.addEventListener("DOMContentLoaded", function() {
         currentContactId = contact.id;
         wrapper.classList.add('side-panel-open');
         searchSection.classList.remove('search-section-full');
+        contactHeaderFlex.classList.remove('contact-header-flex-full');
         document.querySelector('.contact-form-title').textContent = 'Contact Form';
         document.querySelector('.contact-button').textContent = 'Update';
 
