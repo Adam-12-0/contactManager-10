@@ -91,12 +91,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 headerElement.textContent = currentLetter;
                 contactList.appendChild(headerElement);
             }
-            
-            let displayName = contact.organization || contact.last_name || contact.first_name || contact.email_address || contact.phone_number;
-            if (contact.organization && contact.last_name && contact.first_name) {
-                displayName = `${contact.first_name} ${contact.last_name} ${contact.organization}`;
-            }
-            
+
+            let displayName = `${contact.first_name} ${contact.last_name}`;
+			
+            let organizationName = `${contact.organization}`;
+
             const contactElement = document.createElement('div');
             contactElement.className = 'contact';
             contactElement.dataset.contactId = contact.id;
@@ -104,16 +103,25 @@ document.addEventListener("DOMContentLoaded", function() {
             const contactNameElement = document.createElement('div');
             contactNameElement.className = 'contact-name';
             contactNameElement.innerHTML = highlightText(displayName, query);
-            
-            const contactDetailsElement = document.createElement('div');
-            contactDetailsElement.className = 'contact-details';
-            contactDetailsElement.innerHTML = `
-            <div>${highlightText(contact.email_address || '', query)}</div>
-            <div>${highlightText(contact.phone_number || '', query)}</div>
-            `;
-            
+			
+            const contactOrgElement = document.createElement('div');
+            contactOrgElement.className = 'organization-name';
+            contactOrgElement.innerHTML = highlightText(organizationName, query);
+
+            const contactEmailElement = document.createElement('div');
+            contactEmailElement.className = 'contact-email';
+            contactEmailElement.innerHTML = highlightText(contact.email_address || '', query);
+			
+            const contactPhoneElement = document.createElement('div');
+            contactPhoneElement.className = 'contact-phone';
+            contactPhoneElement.innerHTML = highlightText(contact.phone_number || '', query);
+
             contactElement.appendChild(contactNameElement);
-            contactElement.appendChild(contactDetailsElement);
+            contactElement.appendChild(contactOrgElement);
+            contactElement.appendChild(contactEmailElement);
+            contactElement.appendChild(contactPhoneElement);
+            contactList.appendChild(contactElement);
+            console.log("Added contact element: ", displayName);
             
             // Add long press event for selection mode
             contactElement.addEventListener('mousedown', (event) => {
