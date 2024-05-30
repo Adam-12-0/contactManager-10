@@ -2,10 +2,10 @@
 header('Content-Type: application/json');
 
 // Database connection
-$servername = "YOUR_SERVERNAME";
-$username = "YOUR_USERNAME";
-$password = "YOUR_PASSWORD";
-$dbname = "YOUR_DBNAME";
+$servername = "boofoo.store";
+$username = "TheBeast";
+$password = "WeLoveCOP4331";
+$dbname = "contact_manager";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
