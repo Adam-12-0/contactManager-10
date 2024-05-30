@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const contactForm = document.getElementById("contact-form");
     const wrapper = document.querySelector('.wrapper');
     const searchSection = document.querySelector('.search-section');
+    const searchHeader = document.querySelector('.search-header');
     const contactHeaderFlex = document.querySelector('.contact-header-flex');
     const usernameSpan = document.getElementById('username');
     const themeToggle = document.getElementById('themeToggle');
@@ -278,6 +279,7 @@ document.addEventListener("DOMContentLoaded", function() {
         currentContactId = null;
         wrapper.classList.toggle('side-panel-open');
         searchSection.classList.toggle('search-section-full');
+        searchHeader.classList.toggle('search-header-full');
         contactHeaderFlex.classList.toggle('contact-header-flex-full');
         contactForm.reset();
         document.querySelector('.contact-form-title').textContent = 'Contact Form';
@@ -287,6 +289,7 @@ document.addEventListener("DOMContentLoaded", function() {
     closePopupButton.addEventListener('click', () => {
         wrapper.classList.remove('side-panel-open');
         searchSection.classList.add('search-section-full');
+        searchHeader.classList.add('search-header-full');
         contactHeaderFlex.classList.add('contact-header-flex-full');
     });
 
@@ -325,6 +328,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 loadContacts();
                 wrapper.classList.remove('side-panel-open');
                 searchSection.classList.add('search-section-full');
+                searchHeader.classList.add('search-header-full');
                 contactHeaderFlex.classList.add('contact-header-flex-full');
             }
         } catch (error) {
@@ -397,6 +401,7 @@ document.addEventListener("DOMContentLoaded", function() {
         currentContactId = contact.id;
         wrapper.classList.add('side-panel-open');
         searchSection.classList.remove('search-section-full');
+        searchHeader.classList.remove('search-header-full');
         contactHeaderFlex.classList.remove('contact-header-flex-full');
         document.querySelector('.contact-form-title').textContent = 'Contact Form';
         document.querySelector('.contact-button').textContent = 'Update';
