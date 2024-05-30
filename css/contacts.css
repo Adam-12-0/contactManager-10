@@ -336,8 +336,23 @@ body {
     font-size: x-large;
     padding: 10px;
     padding-left: 40px;
-    border-bottom: var(--contact-select-border);
+    border-bottom: 2px solid;
+	border-bottom-color: var(--border-color);
     z-index: 10;
+}
+
+.contact-header-flex{
+	flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: calc(100% - 30%);
+    transition: width 0.5s ease-in-out;
+}
+
+.contact-header-flex-full{
+    width: 100%;
+    transition: width 0.5s ease-in-out;
 }
 
 .contact-header{
@@ -348,6 +363,12 @@ body {
     font-size: medium;
     align-items: right;
     cursor: pointer;
+	
+	border-bottom: 3px solid;
+	border-bottom-color: var(--border-color);
+	
+	border-top: 3px solid;
+	border-top-color: var(--border-color);
 }
 
 .header-item{
