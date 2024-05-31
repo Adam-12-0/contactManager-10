@@ -27,11 +27,14 @@
                         <div class="welcome-message" id="welcomeMessage">
                             <span class="typing">Welcome <span id="username"></span>!</span>
                         </div>
-                        <button id="add-contact-button">+</button>
                     </div>
                     <div class="search-container">
-                        <button class="btn btn-danger btn-block" id="delete-contact-button" style="display: none;">🗑</button>
-                        <h2 class="search-contacts-title">Search for contacts</h2>
+                        <div class="search-and-buttons-section">
+                            <h2 class="search-contacts-title">Search for contacts</h2>
+							<div class="selected-count"></div>
+                            <button id="add-contact-button">+</button>
+                            <button class="btn btn-danger btn-block" id="delete-contact-button" style="display: none;">🗑</button>
+                        </div>
                         <input class="form-control" type="text" id="search-bar" placeholder="&#128269; enter a name, organization, email, or phone number...">
                         <!-- <div id="no-results-message" style="display:none;"></div> -->
                     </div>
@@ -39,14 +42,14 @@
             </div>
                     
             <!-- Contacts list section -->
-			<div class="contact-header-flex contact-header-flex-full">
-				<div class="contact-header"> 
-					<div class=header-item>Name</div>
-					<div class=header-item>Organization</div>
-					<div class=header-item>Email</div>
-					<div class=header-item>Phone Number</div>
-				</div>
-			</div>
+            <div class="contact-header-flex contact-header-flex-full">
+                <div class="contact-header"> 
+                    <div class=header-item></div>
+                    <div class=header-item>Organization</div>
+                    <div class=header-item>Email</div>
+                    <div class=header-item>Phone Number</div>
+			    </div>
+            </div>
             <div class="contacts-list search-section search-section-full" id="contact-page">
                 <div class="contact-container">
                     <div id="contact-list"></div>
