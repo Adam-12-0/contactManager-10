@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const closePopupButton = document.getElementById("close-popup-button");
     const contactForm = document.getElementById("contact-form");
     const wrapper = document.querySelector('.wrapper');
+	const selectedCount= document.querySelector('.selected-count')
     const searchSection = document.querySelector('.search-section');
     const searchHeader = document.querySelector('.search-header');
     const contactHeaderFlex = document.querySelector('.contact-header-flex');
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Load contacts from the API
     function loadContacts() {
-        fetch('http://localhost/contactManager-10/LAMPAPI/load.php', {
+        fetch('LAMPAPI/load.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -92,11 +93,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 headerElement.className = 'sticky-header';
                 headerElement.textContent = currentLetter;
                 contactList.appendChild(headerElement);
-                console.log("Added sticky header: ", currentLetter);
             }
-
+            
             let displayName = `${contact.first_name} ${contact.last_name}`;
-			
             let organizationName = `${contact.organization}`;
             
             const contactElement = document.createElement('div');
@@ -106,11 +105,11 @@ document.addEventListener("DOMContentLoaded", function() {
             const contactNameElement = document.createElement('div');
             contactNameElement.className = 'contact-name';
             contactNameElement.innerHTML = highlightText(displayName, query);
-			
+            
             const contactOrgElement = document.createElement('div');
             contactOrgElement.className = 'organization-name';
             contactOrgElement.innerHTML = highlightText(organizationName, query);
-            
+
             const contactEmailElement = document.createElement('div');
             contactEmailElement.className = 'contact-email';
             contactEmailElement.innerHTML = highlightText(contact.email_address || '', query);
@@ -118,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
             const contactPhoneElement = document.createElement('div');
             contactPhoneElement.className = 'contact-phone';
             contactPhoneElement.innerHTML = highlightText(contact.phone_number || '', query);
-            
+
             contactElement.appendChild(contactNameElement);
             contactElement.appendChild(contactOrgElement);
             contactElement.appendChild(contactEmailElement);
@@ -181,28 +180,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (selectedContacts.size > 0) {
             deleteButton.style.display = 'block';
             addContactButton.style.display = 'none';
-    
-            // Update the sticky headers with the selected contacts count
-            const stickyHeaders = document.querySelectorAll('.sticky-header');
-            stickyHeaders.forEach(header => {
-                let countSpan = header.querySelector('.selected-count');
-                if (!countSpan) {
-                    countSpan = document.createElement('span');
-                    countSpan.className = 'selected-count';
-                    header.appendChild(countSpan);
-                }
-                header.querySelector('.selected-count').textContent = `(${selectedContacts.size} selected)`;
-            });
-            
+			selectedCount.textContent = `(${selectedContacts.size} selected)`;
         } else {
             deleteButton.style.display = 'none';
-            addContactButton.style.display = 'block';
-    
-            // Reset the sticky headers to their original state
-            const stickyHeaders = document.querySelectorAll('.sticky-header .selected-count');
-            stickyHeaders.forEach(span => {
-                span.parentNode.removeChild(span);
-            });
+            addContactButton.style.display = 'block';	
+			selectedCount.textContent = '';
         }
     }
 
@@ -210,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (selectedContacts.size > 0) {
             if (confirm(`Are you sure you want to delete ${selectedContacts.size} contact(s)?`)) {
                 selectedContacts.forEach(contactId => {
-                    fetch('http://localhost/contactManager-10/LAMPAPI/delete.php', {
+                    fetch('LAMPAPI/delete.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -249,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
     searchBar.addEventListener('input', function() {
         const query = searchBar.value.toLowerCase();
         if (query) {
-            fetch('http://localhost/contactManager-10/LAMPAPI/search.php', {
+            fetch('LAMPAPI/search.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
