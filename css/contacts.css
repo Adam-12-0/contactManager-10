@@ -155,6 +155,7 @@ body {
     background-color: var(--background-color);
     overflow-y: auto;
     transition: right 0.5s ease-in-out;
+	z-index: 100;
 }
 
 .side-panel-open .side-panel {
@@ -354,7 +355,6 @@ body {
     border-bottom: var(--contact-select-border);
 }
 .contact-header-flex{
-	flex-grow: 1;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -369,15 +369,20 @@ body {
 
 .contact-header{
 	display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-	background-color: var(--background-color);
+    grid-template-columns: 28% 28% 28% 16%;
+	padding-top: 0px;
+	/* padding-bottom: 0px; */
     font-size: large;
-    text-align: left;
-    align-items: center;
+	/*font-weight: bold;*/
+	background-color: var(--background-color);
     height: 0px;
     z-index: 15;
+    /* border-bottom: 1px solid var(--border-color); */
+    /* padding: 0px; */
+    align-items: center;
+    /* min-width: 0; */
     overflow-wrap: break-word;
-    padding-top: 0px;
+    text-align: left;
     padding-left:  40px;
 	padding-right: 15px;
 }
@@ -385,11 +390,16 @@ body {
 .header-item{
 	padding-top:10px;
 }
+/* 
+.header-item, .contact > div {
 
+} */
 
 .contact {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 28% 28% 28% 16%;
+    /* grid-auto-columns: minmax(0, 1fr);
+    grid-auto-flow: column; */
     border-bottom: 1px solid var(--border-color);
     padding: 15px;
 	padding-left: 40px;
