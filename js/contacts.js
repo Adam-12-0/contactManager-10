@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const usernameSpan = document.getElementById('username');
     const themeToggle = document.getElementById('themeToggle');
     const logoutLink = document.getElementById('logoutLink');
+	const nameHeader = document.getElementById('nameHeader')
     let currentContactId = null;
     let selectedContacts = new Set();
     let longPressTimer;
@@ -83,6 +84,14 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("renderContacts function called");
         contactList.innerHTML = '';
         let currentLetter = '';
+		
+		if (contacts.length === 0) {
+			nameHeader.textContent = "Name";
+		}
+		else {
+			nameHeader.textContent = "";
+		}
+		
         contacts.forEach(contact => {
             let sortingKeyFirstLetter = contact.sorting_key.charAt(0).toUpperCase();
             
@@ -178,13 +187,36 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateSelectionUI() {
         const deleteButton = document.getElementById('delete-contact-button');
         if (selectedContacts.size > 0) {
+			
             deleteButton.style.display = 'block';
             addContactButton.style.display = 'none';
+			
 			selectedCount.textContent = `(${selectedContacts.size} selected)`;
+	
+            /* // Update the sticky headers with the selected contacts count
+            const stickyHeaders = document.querySelectorAll('.sticky-header');
+            stickyHeaders.forEach(header => {
+                let countSpan = header.querySelector('.selected-count');
+                if (!countSpan) {
+                    countSpan = document.createElement('span');
+                    countSpan.className = 'selected-count';
+                    header.appendChild(countSpan);
+                }
+                header.querySelector('.selected-count').textContent = `(${selectedContacts.size} selected)`;
+            }); */
+
         } else {
             deleteButton.style.display = 'none';
-            addContactButton.style.display = 'block';	
+            addContactButton.style.display = 'block';
+    
+            // Reset the sticky headers to their original state
+			
 			selectedCount.textContent = '';
+			
+            /* const stickyHeaders = document.querySelectorAll('.sticky-header .selected-count');
+            stickyHeaders.forEach(span => {
+                span.parentNode.removeChild(span);
+            }); */
         }
     }
 
