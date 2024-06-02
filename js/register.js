@@ -78,16 +78,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify({ username, password }),
             });
 
-            const registerData = await registerResponse.json();
+            const data = await registerResponse.json();
 
-            if (registerData.error) {
-                if (registerData.error === "Username already exists") {
+            if (data.error) {
+                if (data.error === "Username already exists") {
                     usernameInput.classList.add("is-invalid");
                     document.getElementById("usernameFeedback").textContent = "Username already exists";
+                } else if(data.error === "Password must contain at least one upper-case letter, one lower-case letter, and one numerical character") {
+                    passwordInput.classList.add("is-invalid");
+                    document.getElementById("passwordFeedback").textContent = "Password must contain at least 1 upper-case letter, lower-case letter, and numerical character"; 
                 } else {
-                    console.log("API returned error: ", registerData.error);
+                    console.log("API returned error: ", data.error);
                 }
             } else {
+                
                 usernameInput.classList.remove("is-invalid");
                 // Attempt to log the user in immediately after registration
                 try {
@@ -97,13 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         body: JSON.stringify({ username, password }),
                     });
 
-                    const loginData = await loginResponse.json();
+                    const data = await loginResponse.json();
 
-                    if (loginData.error) {
-                        console.log("API returned error: ", loginData.error);
+                    if (data.error) {
+                        console.log("API returned error: ", data.error);
                     } else {
                         // Store the user ID in local storage
-                        localStorage.setItem("user_id", loginData.user_id);
+                        localStorage.setItem("user_id", data.user_id);
                         localStorage.setItem("username", username);
                         window.location.href = "contacts.html";
                     }
