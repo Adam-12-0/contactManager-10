@@ -12,6 +12,9 @@
         <!-- Left vertical menu -->
         <div class="vertical-menu">
             <div class="form-container menu-container">
+                <a href="https://github.com/Adam-12-0/contactManager-10" class="menu-item" target="_blank">
+                    <img id="themeImage" src="images/app-logo-white.png" alt="Project Logo">
+                </a>
                 <button id="themeToggle">Theme 🌙</button>
                 <a href="https://app.swaggerhub.com/apis-docs/JENKINSLCHRIS/smallprojectapi/1.0.0#/Search/search" class="menu-item" target="_blank">Docs</a>
                 <a href="#" id="logoutLink" class="menu-item">Log out</a>
@@ -27,17 +30,18 @@
                         <div class="welcome-message" id="welcomeMessage">
                             <span class="typing">Welcome <span id="username"></span>!</span>
                         </div>
-                        <button id="add-contact-button">+</button>
                     </div>
                     <div class="search-container">
-                        <button class="btn btn-danger btn-block" id="delete-contact-button" style="display: none;">🗑</button>
-                        <h2 class="search-contacts-title">Search for contacts</h2>
+                        <div class="search-and-buttons-section">
+                            <h2 class="search-contacts-title">Search for contacts</h2>
+                            <button id="add-contact-button">+</button>
+                            <button class="btn btn-danger btn-block" id="delete-contact-button" style="display: none;">🗑</button>
+                        </div>
                         <input class="form-control" type="text" id="search-bar" placeholder="&#128269; enter a name, organization, email, or phone number...">
-                        <!-- <div id="no-results-message" style="display:none;"></div> -->
                     </div>
                 </div>
             </div>
-                    
+
             <!-- Contacts list section -->
             <div class="contacts-list search-section search-section-full" id="contact-page">
                 <div class="contact-container">
