@@ -10,7 +10,7 @@
     </head>
     <body>
         <div class="form-container">
-            <p id="welcomeMessage" class="typing-effect">Welcome to the Contact Manager!</p>
+            <p id="welcomeMessage" class="typing-effect">Welcome to <strong>ContactBot</strong>!</p>
             <p id="introMessage" class="typing-effect" style="display: none;">Are you ready to manage your contacts?</p>
             <p id="promptMessage" class="typing-effect" style="display: none;">Please enter your username and password.</p>
             <form id="registerForm" class="needs-validation" novalidate style="display: none;">
@@ -28,7 +28,12 @@
                 <button type="submit" class="btn btn-primary btn-block visible register-button">Register</button>
                 <div class="login-link visible">Already have an account? <a id="loginLink">Log in</a></div>
             </form>
-            <button id="themeToggle">🌙</button>
+            <div class="bottom-section">
+                <a href="https://github.com/Adam-12-0/contactManager-10" target="_blank">
+                    <img id="themeImage" src="images/app-logo-white.png" alt="Project Logo">
+                </a>
+                <button id="themeToggle">🌙</button>
+            </div>
         </div>
         <script src="js/register.js"></script>
     </body>

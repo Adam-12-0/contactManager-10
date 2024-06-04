@@ -1,0 +1,44 @@
+[33m39925b2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: checkout: moving from main to main
+[33m39925b2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{1}: checkout: moving from temp-branch to main
+[33m39925b2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{2}: reset: moving to main
+[33mf99f1d6[m HEAD@{3}: commit (merge): Resolved merge conflicts by keeping local changes
+[33md98468d[m HEAD@{4}: commit (cherry-pick): Typrewriter animation applied to welcome message.
+[33m692ab06[m HEAD@{5}: commit (cherry-pick): Fixed bugs in register and login JS files to ensure theme toggle and local storage options work. Added delete functionality for contacts with multi-select and count display.
+[33m17ee9ba[m HEAD@{6}: checkout: moving from main to temp-branch
+[33m39925b2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{7}: commit: Add: SQL script for bulk inserting 500+ contacts for testing.
+[33m17ee9ba[m HEAD@{8}: commit: Fix: Improve password validation and hashing, update SQL script
+[33mc698faa[m[33m ([m[1;32mupdate-branch[m[33m)[m HEAD@{9}: checkout: moving from main to main
+[33mc698faa[m[33m ([m[1;32mupdate-branch[m[33m)[m HEAD@{10}: merge update-branch: Fast-forward
+[33m9c3bbe2[m HEAD@{11}: checkout: moving from update-branch to main
+[33mc698faa[m[33m ([m[1;32mupdate-branch[m[33m)[m HEAD@{12}: commit: Fixed bugs in register and login JS files to ensure theme toggle and local storage options work. Added delete functionality for contacts with multi-select and count display.
+[33m159a0ba[m HEAD@{13}: commit: Typrewriter animation applied to welcome message.
+[33m9c3bbe2[m HEAD@{14}: checkout: moving from main to update-branch
+[33m9c3bbe2[m HEAD@{15}: commit: feat: Enhance search functionality and implement delete selection mode for contacts
+[33me3726f4[m HEAD@{16}: commit: feat: Update search.php to improve search functionality and add sorting key to response
+[33m7e58c73[m HEAD@{17}: commit: Remove search.php file
+[33m98c473e[m HEAD@{18}: commit: fix: Ensure phone number and email existence checks are limited to the current user's contacts
+[33m0e318d7[m HEAD@{19}: commit: feat: Comprehensive updates to Contact Manager application
+[33m062b99f[m HEAD@{20}: commit: feat: Comprehensive updates to Contact Manager application
+[33m083a296[m HEAD@{21}: commit: Add additional contact logic to ensure SORTING_KEY is generated properly. Add SORTING_KEY as additional field to load.php to assist in contact-list display.
+[33mf4ee3d0[m HEAD@{22}: commit: Add additional contact requirement. Contact must now provide first, last, or orginization
+[33m35a796f[m HEAD@{23}: pull origin main: Fast-forward
+[33m2bdb85b[m HEAD@{24}: commit (merge): feat: Add contact form as a sliding popup, improve contact list display
+[33meb679d6[m HEAD@{25}: commit (merge): feat: Add contact form as a sliding popup, improve contact list display
+[33m1ec2e08[m HEAD@{26}: commit: Resolved merge conflicts by taking remote changes for register.html and login.html
+[33m214afb0[m HEAD@{27}: commit: Updated SQL_scripts.sql: Added sorting_key to contacts table for improved sorting
+[33m3c104dc[m HEAD@{28}: commit (merge): Resolved merge conflicts in login.html and register.html
+[33m1c2b6e7[m HEAD@{29}: reset: moving to HEAD
+[33m1c2b6e7[m HEAD@{30}: commit: Added LAMPAPI folder with various API endpoints including config.php for database configuration
+[33m6acdd73[m HEAD@{31}: merge feature/login-api: Fast-forward
+[33mfb38695[m HEAD@{32}: checkout: moving from feature/login-api to main
+[33m6acdd73[m HEAD@{33}: commit: Update register and login files with CSS changes and error handling; add login.php API endpoint
+[33m33aa232[m HEAD@{34}: commit: Added login API endpoint for user authentication.
+[33mfd9da51[m[33m ([m[1;32mmoodylan-patch-1[m[33m)[m HEAD@{35}: checkout: moving from moodylan-patch-1 to feature/login-api
+[33mfd9da51[m[33m ([m[1;32mmoodylan-patch-1[m[33m)[m HEAD@{36}: checkout: moving from main to moodylan-patch-1
+[33mfb38695[m HEAD@{37}: commit: Add registration page and JS file with initial animations. Need to fix animation for username and password headers and the register button to appear together with a water wave animation. Ensure proper validation and error handling is maintained.
+[33m7dbdb1d[m HEAD@{38}: commit: Add register.php API endpoint for user registration
+[33m80ec27d[m HEAD@{39}: commit: Add SQL script to create and populate users and contacts tables
+[33mf91458e[m HEAD@{40}: commit: Updated README with team member roles
+[33m998cde7[m HEAD@{41}: commit: Updated README with team member roles
+[33m6e06e04[m HEAD@{42}: Branch: renamed refs/heads/master to refs/heads/main
+[33m6e06e04[m HEAD@{44}: commit (initial): Added README.md

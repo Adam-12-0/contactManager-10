@@ -9,13 +9,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginLink = document.getElementById("loginLink");
     const togglePassword = document.getElementById("togglePassword");
     const themeToggle = document.getElementById('themeToggle');
+    const themeImage = document.getElementById('themeImage');
 
     themeToggle.addEventListener('click', () => {
         document.body.classList.toggle('light-theme');
         if (document.body.classList.contains('light-theme')) {
+            themeImage.src = 'images/app-logo-black.png';
             themeToggle.textContent = '☀️';
             localStorage.setItem('theme', 'light');
         } else {
+            themeImage.src = 'images/app-logo-white.png';
             themeToggle.textContent = '🌙';
             localStorage.setItem('theme', 'dark');
         }
@@ -38,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             registerButton.classList.add("visible");
             themeToggle.classList.add("visible");
             loginLink.classList.add("visible");
+            themeImage.classList.add("visible");
             registerForm.style.display = "block";
         }, 500);
     });

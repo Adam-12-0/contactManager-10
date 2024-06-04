@@ -83,7 +83,7 @@ if (!empty($errors)) {
 
 // Prepare and execute the SQL statement to insert the new contact
 try {
-    $stmt = $conn->prepare("INSERT INTO Contacts (organization, last_name, first_name, phone_number, email_address, user_id, sorting_key) VALUES (:organization, :last_name, :first_name, :phone_number, :email_address, :user_id, CONCAT(:user_id, :organization, :last_name, :first_name, :email_address, :phone_number))");
+    $stmt = $conn->prepare("INSERT INTO Contacts (organization, last_name, first_name, phone_number, email_address, user_id, sorting_key) VALUES (:organization, :last_name, :first_name, :phone_number, :email_address, :user_id, CONCAT(:user_id, COALESCE(:first_name, ''), COALESCE(:last_name, ''), COALESCE(:organization, ''), COALESCE(:email_address, ''), COALESCE(:phone_number, '')))");
     $stmt->bindParam(':organization', $data->organization);
     $stmt->bindParam(':last_name', $data->last_name);
     $stmt->bindParam(':first_name', $data->first_name);

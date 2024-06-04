@@ -5,10 +5,15 @@ document.addEventListener("DOMContentLoaded", function() {
     const closePopupButton = document.getElementById("close-popup-button");
     const contactForm = document.getElementById("contact-form");
     const wrapper = document.querySelector('.wrapper');
+	const selectedCount= document.querySelector('.selected-count')
     const searchSection = document.querySelector('.search-section');
+    const searchHeader = document.querySelector('.search-header');
+    const contactHeaderFlex = document.querySelector('.contact-header-flex');
     const usernameSpan = document.getElementById('username');
     const themeToggle = document.getElementById('themeToggle');
     const logoutLink = document.getElementById('logoutLink');
+    const nameHeader = document.getElementById('nameHeader');
+    const themeImage = document.getElementById('themeImage');
     let currentContactId = null;
     let selectedContacts = new Set();
     let longPressTimer;
@@ -35,9 +40,11 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Theme select");
         document.body.classList.toggle('light-theme');
         if (document.body.classList.contains('light-theme')) {
+            themeImage.src = 'images/app-logo-black.png';
             themeToggle.textContent = 'Theme ☀️';
             localStorage.setItem('theme', 'light');
         } else {
+            themeImage.src = 'images/app-logo-white.png';
             themeToggle.textContent = 'Theme 🌙';
             localStorage.setItem('theme', 'dark');
         }
@@ -53,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Load contacts from the API
     function loadContacts() {
-        fetch('http://localhost/contactManager-10/LAMPAPI/load.php', {
+        fetch('LAMPAPI/load.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -78,8 +85,17 @@ document.addEventListener("DOMContentLoaded", function() {
     // Render contacts to the DOM with optional highlighting
     function renderContacts(contacts, query = '') {
         console.log("renderContacts function called");
+        const queries = query.split(' ');
         contactList.innerHTML = '';
         let currentLetter = '';
+		
+		if (contacts.length === 0) {
+			nameHeader.textContent = "Name";
+		}
+		else {
+			nameHeader.textContent = "";
+		}
+		
         contacts.forEach(contact => {
             let sortingKeyFirstLetter = contact.sorting_key.charAt(0).toUpperCase();
             
@@ -92,10 +108,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 contactList.appendChild(headerElement);
             }
             
-            let displayName = contact.organization || contact.last_name || contact.first_name || contact.email_address || contact.phone_number;
-            if (contact.organization && contact.last_name && contact.first_name) {
-                displayName = `${contact.first_name} ${contact.last_name} ${contact.organization}`;
-            }
+            let displayName = `${contact.first_name} ${contact.last_name}`;
+            let organizationName = `${contact.organization}`;
             
             const contactElement = document.createElement('div');
             contactElement.className = 'contact';
@@ -103,17 +117,26 @@ document.addEventListener("DOMContentLoaded", function() {
             
             const contactNameElement = document.createElement('div');
             contactNameElement.className = 'contact-name';
-            contactNameElement.innerHTML = highlightText(displayName, query);
+            contactNameElement.innerHTML = highlightText(displayName, queries);
             
-            const contactDetailsElement = document.createElement('div');
-            contactDetailsElement.className = 'contact-details';
-            contactDetailsElement.innerHTML = `
-            <div>${highlightText(contact.email_address || '', query)}</div>
-            <div>${highlightText(contact.phone_number || '', query)}</div>
-            `;
-            
+            const contactOrgElement = document.createElement('div');
+            contactOrgElement.className = 'organization-name';
+            contactOrgElement.innerHTML = highlightText(organizationName, queries);
+
+            const contactEmailElement = document.createElement('div');
+            contactEmailElement.className = 'contact-email';
+            contactEmailElement.innerHTML = highlightText(contact.email_address || '', queries);
+			
+            const contactPhoneElement = document.createElement('div');
+            contactPhoneElement.className = 'contact-phone';
+            contactPhoneElement.innerHTML = highlightText(contact.phone_number || '', queries);
+
             contactElement.appendChild(contactNameElement);
-            contactElement.appendChild(contactDetailsElement);
+            contactElement.appendChild(contactOrgElement);
+            contactElement.appendChild(contactEmailElement);
+            contactElement.appendChild(contactPhoneElement);
+            contactList.appendChild(contactElement);
+            console.log("Added contact element: ", displayName);
             
             // Add long press event for selection mode
             contactElement.addEventListener('mousedown', (event) => {
@@ -170,28 +193,11 @@ document.addEventListener("DOMContentLoaded", function() {
         if (selectedContacts.size > 0) {
             deleteButton.style.display = 'block';
             addContactButton.style.display = 'none';
-    
-            // Update the sticky headers with the selected contacts count
-            const stickyHeaders = document.querySelectorAll('.sticky-header');
-            stickyHeaders.forEach(header => {
-                let countSpan = header.querySelector('.selected-count');
-                if (!countSpan) {
-                    countSpan = document.createElement('span');
-                    countSpan.className = 'selected-count';
-                    header.appendChild(countSpan);
-                }
-                header.querySelector('.selected-count').textContent = `(${selectedContacts.size} selected)`;
-            });
-            
+			selectedCount.textContent = `(${selectedContacts.size} selected)`;
         } else {
             deleteButton.style.display = 'none';
             addContactButton.style.display = 'block';
-    
-            // Reset the sticky headers to their original state
-            const stickyHeaders = document.querySelectorAll('.sticky-header .selected-count');
-            stickyHeaders.forEach(span => {
-                span.parentNode.removeChild(span);
-            });
+            selectedCount.textContent = ``;
         }
     }
 
@@ -199,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (selectedContacts.size > 0) {
             if (confirm(`Are you sure you want to delete ${selectedContacts.size} contact(s)?`)) {
                 selectedContacts.forEach(contactId => {
-                    fetch('http://localhost/contactManager-10/LAMPAPI/delete.php', {
+                    fetch('LAMPAPI/delete.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -228,17 +234,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
     
     // Highlight the matching parts of the text
-    function highlightText(text, query) {
-        if (!query) return text;
-        const regex = new RegExp(`(${query})`, 'gi');
-        return text.replace(regex, '<span class="highlight">$1</span>');
+    function highlightText(text, queries) {
+        if (!queries) return text;
+		const pattern = queries.join('|');
+        const regex = new RegExp(pattern, 'gi');
+		
+        return text.replace(regex, match => `<span class="highlight">${match}</span>`);
     }
     
     // Handle search functionality
     searchBar.addEventListener('input', function() {
         const query = searchBar.value.toLowerCase();
         if (query) {
-            fetch('http://localhost/contactManager-10/LAMPAPI/search.php', {
+            fetch('LAMPAPI/search.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -268,6 +276,8 @@ document.addEventListener("DOMContentLoaded", function() {
         currentContactId = null;
         wrapper.classList.toggle('side-panel-open');
         searchSection.classList.toggle('search-section-full');
+        searchHeader.classList.toggle('search-header-full');
+        contactHeaderFlex.classList.toggle('contact-header-flex-full');
         contactForm.reset();
         document.querySelector('.contact-form-title').textContent = 'Contact Form';
         document.querySelector('.contact-button').textContent = 'Add';
@@ -276,6 +286,8 @@ document.addEventListener("DOMContentLoaded", function() {
     closePopupButton.addEventListener('click', () => {
         wrapper.classList.remove('side-panel-open');
         searchSection.classList.add('search-section-full');
+        searchHeader.classList.add('search-header-full');
+        contactHeaderFlex.classList.add('contact-header-flex-full');
     });
 
     // Handle form submission for both adding and updating contact
@@ -313,6 +325,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 loadContacts();
                 wrapper.classList.remove('side-panel-open');
                 searchSection.classList.add('search-section-full');
+                searchHeader.classList.add('search-header-full');
+                contactHeaderFlex.classList.add('contact-header-flex-full');
             }
         } catch (error) {
             console.error("Error:", error);
@@ -384,6 +398,8 @@ document.addEventListener("DOMContentLoaded", function() {
         currentContactId = contact.id;
         wrapper.classList.add('side-panel-open');
         searchSection.classList.remove('search-section-full');
+        searchHeader.classList.remove('search-header-full');
+        contactHeaderFlex.classList.remove('contact-header-flex-full');
         document.querySelector('.contact-form-title').textContent = 'Contact Form';
         document.querySelector('.contact-button').textContent = 'Update';
 

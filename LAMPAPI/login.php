@@ -27,7 +27,7 @@ if (!$result) {
 }
 
 // Verify the password
-if ($result['password'] !== $data->password) { // Assuming password is stored in plaintext
+if ($result['password'] !== md5($data->password)) {
     echo json_encode(array("error" => "Incorrect password"));
     exit();
 }

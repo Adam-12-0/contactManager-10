@@ -6,12 +6,11 @@
         <title>Login</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/general.css">
-        <link rel="stylesheet" href="css/login.css">
         <link rel="stylesheet" href="css/user-access.css">
     </head>
     <body>
         <div class="form-container">
-            <p id="welcomeMessage" class="typing-effect">Welcome to the Contact Manager!</p>
+            <p id="welcomeMessage" class="typing-effect">Welcome to <strong>ContactBot</strong>!</p>
             <p id="introMessage" class="typing-effect login-message" style="display: none;">Log in to manage your contacts.</p>
             <form id="loginForm" class="needs-validation" novalidate style="display: none;">
                 <div class="form-group">
@@ -28,7 +27,12 @@
                 <button type="submit" class="btn btn-primary btn-block login-button" id="loginButton">Log in</button>
                 <div class="register-link visible register-prompt">Don't have an account? <a id="registerLink">Register</a></div>
             </form>
-            <button id="themeToggle">🌙</button>
+            <div class="bottom-section">
+                <a href="https://github.com/Adam-12-0/contactManager-10" target="_blank">
+                    <img id="themeImage" src="images/app-logo-white.png" alt="Project Logo">
+                </a>
+                <button id="themeToggle">🌙</button>
+            </div>
         </div>
         <script src="js/login.js"></script>
     </body>

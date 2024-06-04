@@ -91,7 +91,7 @@ if (!empty($errors)) {
 
 // Prepare and execute the SQL statement to update the contact
 try {
-    $stmt = $conn->prepare("UPDATE Contacts SET organization = :organization, last_name = :last_name, first_name = :first_name, phone_number = :phone_number, email_address = :email_address, sorting_key = CONCAT(:user_id, :organization, :last_name, :first_name, :email_address, :phone_number) WHERE id = :id");
+    $stmt = $conn->prepare("UPDATE Contacts SET organization = :organization, last_name = :last_name, first_name = :first_name, phone_number = :phone_number, email_address = :email_address, sorting_key = CONCAT(:user_id, COALESCE(:first_name, ''), COALESCE(:last_name, ''), COALESCE(:organization, ''), COALESCE(:email_address, ''), COALESCE(:phone_number, '')) WHERE id = :id");
     $stmt->bindParam(':organization', $data->organization);
     $stmt->bindParam(':last_name', $data->last_name);
     $stmt->bindParam(':first_name', $data->first_name);
