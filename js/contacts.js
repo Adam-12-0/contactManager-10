@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
 		}
 		
         contacts.forEach(contact => {
-            let sortingKeyFirstLetter = contact.sorting_key.charAt(0).toUpperCase();
+            let sortingKeyFirstLetter = contact.SORTING_KEY.charAt(0).toUpperCase();
             
             // Create a new sticky header if the first letter changes
             if (sortingKeyFirstLetter !== currentLetter) {
