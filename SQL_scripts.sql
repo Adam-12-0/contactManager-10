@@ -35,11 +35,11 @@ INSERT INTO users (username, password) VALUES ('user5', 'password5');
 -- Insert test data into the contacts table
 INSERT INTO Contacts (organization, last_name, first_name, phone_number, email_address, user_id, SORTING_KEY) 
 VALUES 
-('TechCorp', 'Doe', 'John', '1234567890', 'john.doe@example.com', 1, CONCAT('1', 'TechCorp', 'Doe', 'John', 'john.doe@example.com', '1234567890')),
-(NULL, 'Smith', 'Jane', '0987654321', NULL, 2, CONCAT('2', '', 'Smith', 'Jane', '', '0987654321')),
-('AlphaInc', 'Brown', 'Charlie', '1234567890', 'charlie.brown@example.com', 3, CONCAT('3', 'AlphaInc', 'Brown', 'Charlie', 'charlie.brown@example.com', '1234567890')),
-(NULL, 'White', 'Alice', '9876543210', NULL, 4, CONCAT('4', '', 'White', 'Alice', '', '9876543210')),
-('BetaCorp', NULL, 'Bob', '1112223333', 'bob@betacorp.com', 5, CONCAT('5', 'BetaCorp', '', 'Bob', 'bob@betacorp.com', '1112223333'));
+('TechCorp', 'Doe', 'John', '1234567890', 'unique_john.doe@example.com', 2, CONCAT('2', 'John', 'Doe', 'TechCorp', 'unique_john.doe@example.com', '1234567890')),
+(NULL, 'Smith', 'Jane', '0987654321', 'unique_null_jane@example.com', 2, CONCAT('2', 'Jane', 'Smith', '', '', '0987654321')),
+('AlphaInc', 'Brown', 'Charlie', 'unique_1234567890', 'charlie.brown@example.com', 2, CONCAT('2', 'Charlie', 'Brown', 'AlphaInc', 'charlie.brown@example.com', 'unique_1234567890')),
+(NULL, 'White', 'Alice', '9876543210', 'unique_null_alice@example.com', 2, CONCAT('2', 'Alice', 'White', '', '', '9876543210')),
+('aaaaaaa', 'aaaaaaa', 'aaaaaaa', 'unique_1234567890', 'unique_null_aaaaaaa@example.com', 2, CONCAT('2', 'aaaaaaa', 'aaaaaaa', 'aaaaaaa', '', 'unique_1234567890'));
 
 -- Show all tables in the current database
 SHOW TABLES;

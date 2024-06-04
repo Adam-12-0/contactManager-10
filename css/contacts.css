@@ -18,6 +18,7 @@
     --contact-selected-color: blue;
     --blurred-background: rgba(0, 0, 0, 0.8);
     --input-box-color: rgb(18,18,18);
+    --highlight-color: rgb(121, 121, 0);
 }
 
 /* Light Theme variables */
@@ -39,7 +40,7 @@ body.light-theme {
     --contact-selected-hover-color: rgb(214, 157, 157);
     --contact-selected-color: rgb(55, 115, 161);
     --blurred-background: rgb(255, 255, 255, 0.8);
-    /* TODO: review contact selection colors for light theme */
+    --highlight-color: yellow;
 }
 
 body {
@@ -99,7 +100,7 @@ body {
 #add-contact-button, #delete-contact-button {
     place-items: center;
     color: var(--text-color);
-    background: var(--background-color);
+    background: none;
     border: none;
     outline: none;
     cursor: pointer;
@@ -185,6 +186,13 @@ body {
     transition: width 0.5s ease-in-out;
 }
 
+.search-and-buttons-section {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+}
+
 .search-section-full {
     width: 100%;
     transition: width 0.5s ease-in-out;
@@ -221,7 +229,7 @@ body {
 }
 
 .highlight {
-    background-color: yellow;
+    background-color: var(--highlight-color);
 }
 
 .vertical-menu {
@@ -230,11 +238,11 @@ body {
     width: 15%;
     box-sizing: border-box;
     font-size: x-large;
-    justify-content: center;
     align-items: flex-start;
     padding-left: 10px;
     background-color: var(--blurred-background);
     backdrop-filter: var(--form-backdrop-filter);
+    justify-content: center;
 }
 
 .menu-item {
@@ -457,4 +465,8 @@ body {
 
 .top-header {
     display: inline;
+}
+
+#themeImage {
+    height: 50px;
 }

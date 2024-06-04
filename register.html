@@ -6,29 +6,34 @@
         <title>Register</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/general.css">
-        <!-- <link rel="stylesheet" href="css/register.css"> -->
         <link rel="stylesheet" href="css/user-access.css">
     </head>
     <body>
         <div class="form-container">
-            <p id="welcomeMessage" class="typing-effect">Welcome to the Contact Manager!</p>
+            <p id="welcomeMessage" class="typing-effect">Welcome to <strong>ContactBot</strong>!</p>
             <p id="introMessage" class="typing-effect" style="display: none;">Are you ready to manage your contacts?</p>
             <p id="promptMessage" class="typing-effect" style="display: none;">Please enter your username and password.</p>
             <form id="registerForm" class="needs-validation" novalidate style="display: none;">
                 <div class="form-group">
-                    <div class="username-header">*Username:</div>
+                    <div class="username-header">Username:*</div>
                     <input type="text" class="form-control" id="username" name="username" required>
                     <div class="invalid-feedback" id="usernameFeedback">Username is required.</div>
                 </div>
                 <div class="form-group password-wrapper">
-                    <div class="password-header">*Password:</div>
+                    <div class="password-header">Password:*</div>
                     <input type="password" class="form-control" id="password" name="password" required>
                     <i class="toggle-password" id="togglePassword">👁️</i>
-                    <div class="invalid-feedback">Password is required.</div>
+                    <div class="invalid-feedback" id="passwordFeedback">Password is required.</div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block visible register-button">Register</button>
                 <div class="login-link visible">Already have an account? <a id="loginLink">Log in</a></div>
             </form>
+            <div class="bottom-section">
+                <a href="https://github.com/Adam-12-0/contactManager-10" target="_blank">
+                    <img id="themeImage" src="images/app-logo-white.png" alt="Project Logo">
+                </a>
+                <button id="themeToggle">🌙</button>
+            </div>
         </div>
         <script src="js/register.js"></script>
     </body>

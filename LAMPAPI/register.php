@@ -26,11 +26,20 @@ if ($result) {
     exit();
 }
 
+if (!preg_match('/[a-z]/', $data->password) || !preg_match('/[A-Z]/', $data->password) || !preg_match('/[0-9]/', $data->password))
+{
+	echo json_encode(array("error" => "Password must contain at least one upper-case letter, one lower-case letter, and one numerical character"));
+    exit();
+}
+
+// Hash the password before storing
+$hashedPassword = md5($data->password);
+
 // Insert the new user
 try {
     $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
     $stmt->bindParam(':username', $data->username);
-    $stmt->bindParam(':password', $data->password); // Don't hash the password
+    $stmt->bindParam(':password', $hashedPassword);
     $stmt->execute();
     echo json_encode(array("error" => ""));
 } catch (PDOException $e) {

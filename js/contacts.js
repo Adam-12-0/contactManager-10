@@ -12,7 +12,9 @@ document.addEventListener("DOMContentLoaded", function() {
     const usernameSpan = document.getElementById('username');
     const themeToggle = document.getElementById('themeToggle');
     const logoutLink = document.getElementById('logoutLink');
-	const nameHeader = document.getElementById('nameHeader')
+	  const nameHeader = document.getElementById('nameHeader')
+    const themeImage = document.getElementById('themeImage');
+
     let currentContactId = null;
     let selectedContacts = new Set();
     let longPressTimer;
@@ -33,6 +35,14 @@ document.addEventListener("DOMContentLoaded", function() {
     } else {
         themeToggle.textContent = 'Theme 🌙';
     }
+
+    function updateThemeImage() {
+        if (document.body.classList.contains('light-theme')) {
+            themeImage.src = 'images/app-logo-black.png';
+        } else {
+            themeImage.src = 'images/app-logo-white.png';
+        }
+    }
     
     // Light/dark theme
     themeToggle.addEventListener('click', () => {
@@ -45,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
             themeToggle.textContent = 'Theme 🌙';
             localStorage.setItem('theme', 'dark');
         }
+        updateThemeImage();
     });
     
     // Log out functionality
