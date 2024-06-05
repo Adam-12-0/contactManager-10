@@ -5,8 +5,8 @@ error_reporting(E_ALL);
 
 // Database connection
 $servername = "localhost";
-$username = "TheBeast";
-$password = "WeLoveCOP4331";
+$username = "root";
+$password = "";
 $dbname = "contact_manager";
 
 $conn = new mysqli($servername, $username, $password, $dbname);
